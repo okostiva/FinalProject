@@ -8,14 +8,14 @@ public abstract class Target {
 	//Status of true means show the target, status of false means the target has been destroyed
 	protected int x, y, health;
 	protected Image image;
-	protected boolean status;
+	protected boolean notDestroyed;
 	
 	public Target() {
 		// TODO Auto-generated constructor stub
 		this.health = 0;
 		x = 0;
 		y = 0;
-		this.status = true;
+		this.notDestroyed = true;
 		this.image = Toolkit.getDefaultToolkit().getImage("/Images/none.jpg");
 	}
 
@@ -24,7 +24,7 @@ public abstract class Target {
 		this.y = y;
 		this.health = health;
 		this.image = image;
-		this.status = true;
+		this.notDestroyed = true;
 	}
 	
 	public Target(int x, int y, int health, String imagePath) {
@@ -32,7 +32,7 @@ public abstract class Target {
 		this.y = y;
 		this.health = health;
 		this.image = Toolkit.getDefaultToolkit().getImage(imagePath);
-		this.status = true;
+		this.notDestroyed = true;
 	}
 	
 	public int getHealth() {
@@ -44,7 +44,7 @@ public abstract class Target {
 	}
 	
 	public boolean getStatus() {
-		return this.status;
+		return this.notDestroyed;
 	}
 	
 	public int getX() {
@@ -59,7 +59,7 @@ public abstract class Target {
 		this.health -= damage;
 		if (health <= 0)
 		{
-			status = false;
+			notDestroyed = false;
 		}
 	}
 	
