@@ -47,6 +47,14 @@ public abstract class Target {
 		return this.status;
 	}
 	
+	public void setStatus(boolean st) {
+		this.status = st;
+	}
+	
+	public void setHealth(int h) {
+		this.health = h;
+	}
+	
 	public int getX() {
 		return x;
 	}
@@ -55,6 +63,13 @@ public abstract class Target {
 		return y;
 	}
 	
+	public void setX(int x) {
+		this.x = x;;
+	}
+	
+	public void setY(int y) {
+		this.y = y;;
+	}
 	public void damageDone(int damage) {
 		this.health -= damage;
 		if (health <= 0)

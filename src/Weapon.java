@@ -24,5 +24,9 @@ public abstract class Weapon {
 		this.image = Toolkit.getDefaultToolkit().getImage(imagePath);
 	}
 	
+	public int getDamage() {
+		return this.damage;
+	}
+	
 	public abstract void draw(Graphics g);
 }
