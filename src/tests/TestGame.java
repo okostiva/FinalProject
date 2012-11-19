@@ -48,6 +48,20 @@ public class TestGame {
 		Assert.assertEquals(3,nerd.getWeapons().size());
 	}
 	
+	@Test
+	public void testDamage() {
+		// A way to test that the right amount of damage is done when 
+		Assert.assertEquals(45, window.getHealth());
+		window.notDestroyed = false;
+		Assert.assertEquals(-5, 45-nerd.getWeapon(0).getDamage());
+		Assert.assertEquals(66, bully.getHealth());
+		bully.notDestroyed = false;
+		Assert.assertEquals(46, 66-nerd.getWeapon(1).getDamage());
+		Assert.assertEquals(88, exam.getHealth());
+		exam.notDestroyed = false;
+		Assert.assertEquals(58, 88-nerd.getWeapon(2).getDamage());
+	}
+	
 	
 	@Test
 	public void testToss() {

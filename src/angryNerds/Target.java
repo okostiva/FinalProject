@@ -9,7 +9,8 @@ public abstract class Target {
 	//Status of true means show the target, status of false means the target has been destroyed
 	protected int x, y, health;
 	protected Image image;
-	protected boolean notDestroyed;
+	//protected 
+	public boolean notDestroyed;
 	
 	public Target() {
 		// TODO Auto-generated constructor stub
