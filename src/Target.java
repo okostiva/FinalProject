@@ -48,7 +48,7 @@ public abstract class Target {
 	}
 	
 	public void setStatus(boolean st) {
-		this.status = st;
+		this.notDestroyed = st;
 	}
 	
 	public void setHealth(int h) {
