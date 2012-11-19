@@ -20,9 +20,9 @@ import angryNerds.Exam;
 public class TestGame {
 	Nerd nerd;
 	Book book;
-	Pencil pen;
+	Pencil pencil;
 	Protractor prot;
-	Window win;
+	Window window;
 	Bully bully;
 	Exam exam;
 	
@@ -30,9 +30,9 @@ public class TestGame {
 	public void beforeTest (){
 		nerd = new Nerd("NERD", "");
 		book = new Book(50, "", "MATH");
-		pen = new Pencil(20, "");
+		pencil = new Pencil(20, "");
 		prot = new Protractor(30, "");
-		win = new Window(20, 20, 45, "");
+		window = new Window(20, 20, 45, "");
 		bully = new Bully(40, 30, 66, "", "BULLY");
 		exam = new Exam(50, 30, 88, "", "PHYSICS");
 	}
@@ -40,11 +40,12 @@ public class TestGame {
 	@Test
 	public void testNerd() {
 		nerd.AddWeapon(book);
-		nerd.AddWeapon(pen);
+		nerd.AddWeapon(pencil);
 		nerd.AddWeapon(prot);
 		Assert.assertEquals(book, nerd.getWeapon(0));
-		Assert.assertEquals(pen, nerd.getWeapon(1));
+		Assert.assertEquals(pencil, nerd.getWeapon(1));
 		Assert.assertEquals(prot, nerd.getWeapon(2));
+		Assert.assertEquals(3,nerd.getWeapons().size());
 	}
 	
 	

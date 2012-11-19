@@ -46,6 +46,10 @@ public class Nerd {
 		return;
 	}
 	
+	public ArrayList<Weapon> getWeapons() {
+		return weapons;
+	}
+	
 	public void toss(int angle, int power, Weapon weapon) {
 		return;
 	}
