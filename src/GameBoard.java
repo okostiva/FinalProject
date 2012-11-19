@@ -19,8 +19,8 @@ public class GameBoard extends JFrame {
 		controlPanel = new ControlPanel();
 		targets = new ArrayList<Target>();
 		
-		this.setSize(100,  100);
-		this.add(controlPanel);
+		setSize(150, 100);
+		add(controlPanel);
 	}
 
 	public Target getTarget(int index) {

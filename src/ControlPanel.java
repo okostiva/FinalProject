@@ -1,3 +1,5 @@
+import java.awt.GridLayout;
+
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -25,11 +27,12 @@ public class ControlPanel extends JPanel {
 		angle = 0;
 		power = 0;
 		
-		this.add(angleLabel);
-		this.add(angleInput);
-		this.add(powerLabel);
-		this.add(powerInput);
-		this.add(enterData);
+		setLayout(new GridLayout(3, 2));
+		add(angleLabel);
+		add(angleInput);
+		add(powerLabel);
+		add(powerInput);
+		add(enterData);
 	}
 	
 	public int getPower() {
