@@ -1,4 +1,5 @@
 package angryNerds;
+import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -27,7 +28,7 @@ public class GameBoard extends JFrame {
 		targets = new ArrayList<Target>();
 		
 		setSize(200, 200);
-		add(controlPanel);
+		this.add(controlPanel, BorderLayout.SOUTH);
 		JMenuBar menu = new JMenuBar();
 		setJMenuBar(menu);
 		menu.add(createFileMenu());

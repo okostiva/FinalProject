@@ -28,11 +28,11 @@ public class ControlPanel extends JPanel {
 		angleInput = new JTextArea("0");
 		powerLabel = new JLabel("Power: ");
 		powerInput = new JTextArea("0");
-		enterData = new JButton("Submit");
+		enterData = new JButton("Fire");
 		angle = 0;
 		power = 0;
 		
-		setLayout(new GridLayout(3, 2));
+		setLayout(new GridLayout(1, 0));
 		add(angleLabel);
 		add(angleInput);
 		add(powerLabel);
