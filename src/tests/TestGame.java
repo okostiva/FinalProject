@@ -27,7 +27,7 @@ public class TestGame {
 	Exam exam;
 	
 	@BeforeClass
-	public void beforeTest (){
+	public void beforeTest () {
 		nerd = new Nerd("NERD", "");
 		book = new Book(50, "", "MATH");
 		pencil = new Pencil(20, "");
@@ -50,7 +50,7 @@ public class TestGame {
 	
 	@Test
 	public void testDamage() {
-		// A way to test that the right amount of damage is done when 
+		// A way to test that the right amount of damage is done when a weapon hits a target
 		Assert.assertEquals(45, window.getHealth());
 		window.notDestroyed = false;
 		Assert.assertEquals(-5, 45-nerd.getWeapon(0).getDamage());
@@ -62,9 +62,15 @@ public class TestGame {
 		Assert.assertEquals(58, 88-nerd.getWeapon(2).getDamage());
 	}
 	
-	
 	@Test
 	public void testToss() {
 		// testing the change of location after a specified time...
+	}
+	
+	@Test
+	public void testLoadConfigs() {
+		// Tests to make sure the code is loading the configuration files correctly
+		// We need a way to incorporate "level"
+		Assert.assertEquals(25, window.getX());
 	}
 }
