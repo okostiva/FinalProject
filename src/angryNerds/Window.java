@@ -9,8 +9,8 @@ public class Window extends Target {
 		super();
 	}
 	
-	public Window(int x, int y, int health, String imgPath) {
-		super(x, y, health, imgPath);
+	public Window(int x, int y, int health, int points, String imgPath) {
+		super(x, y, health, points, imgPath);
 	}
 	
 	@Override

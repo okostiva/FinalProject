@@ -29,9 +29,9 @@ public class TestGame {
 		book = new Book(50, "", "MATH");
 		pencil = new Pencil(20, "");
 		prot = new Protractor(30, "");
-		window = new Window(20, 20, 45, "");
-		bully = new Bully(40, 30, 66, "", "BULLY");
-		exam = new Exam(50, 30, 88, "", "PHYSICS");
+		window = new Window(20, 20, 45, 100, "");
+		bully = new Bully(40, 30, 66, 150, "", "BULLY");
+		exam = new Exam(50, 30, 88, 200, "", "PHYSICS");
 	}
 	
 	@Test

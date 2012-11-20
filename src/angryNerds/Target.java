@@ -7,7 +7,7 @@ import java.awt.Toolkit;
 public abstract class Target {
 
 	//Status of true means show the target, status of false means the target has been destroyed
-	protected int x, y, health;
+	protected int x, y, health, points;
 	protected Image image;
 	//protected 
 	public boolean notDestroyed;
@@ -21,24 +21,30 @@ public abstract class Target {
 		this.image = Toolkit.getDefaultToolkit().getImage("/Images/none.jpg");
 	}
 
-	public Target(int x, int y, int health, Image image) {
+	public Target(int x, int y, int health, int points, Image image) {
 		this.x = x;
 		this.y = y;
 		this.health = health;
+		this.points = points;
 		this.image = image;
 		this.notDestroyed = true;
 	}
 	
-	public Target(int x, int y, int health, String imagePath) {
+	public Target(int x, int y, int health, int points, String imagePath) {
 		this.x = x;
 		this.y = y;
 		this.health = health;
+		this.points = points;
 		this.image = Toolkit.getDefaultToolkit().getImage(imagePath);
 		this.notDestroyed = true;
 	}
 	
 	public int getHealth() {
 		return this.health;
+	}
+	
+	public int getPoints() {
+		return this.points;
 	}
 	
 	public Image getImage() {
@@ -66,11 +72,11 @@ public abstract class Target {
 	}
 	
 	public void setX(int x) {
-		this.x = x;;
+		this.x = x;
 	}
 	
 	public void setY(int y) {
-		this.y = y;;
+		this.y = y;
 	}
 	
 	public void damageDone(int damage) {

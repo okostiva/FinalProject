@@ -1,5 +1,6 @@
 package angryNerds;
 import java.awt.Graphics;
+import java.awt.Image;
 
 
 public class Bully extends Target {
@@ -12,8 +13,13 @@ public class Bully extends Target {
 		this.name = "???";
 	}
 	
-	public Bully(int x, int y, int health, String imgPath, String name) {
-		super(x, y, health, imgPath);
+	public Bully(int x, int y, int health, int points, String imgPath, String name) {
+		super(x, y, health, points, imgPath);
+		this.name = name;
+	}
+	
+	public Bully(int x, int y, int health, int points, Image image, String name) {
+		super(x, y, health, points, image);
 		this.name = name;
 	}
 	

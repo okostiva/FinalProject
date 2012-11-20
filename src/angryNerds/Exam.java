@@ -1,5 +1,6 @@
 package angryNerds;
 import java.awt.Graphics;
+import java.awt.Image;
 
 
 public class Exam extends Target {
@@ -12,8 +13,13 @@ public class Exam extends Target {
 		subject = "???";
 	}
 	
-	public Exam(int x, int y, int health, String imgPath, String subject) {
-		super(x, y, health, imgPath);
+	public Exam(int x, int y, int health, int points, String imgPath, String subject) {
+		super(x, y, health, points, imgPath);
+		this.subject = subject;
+	}
+	
+	public Exam(int x, int y, int health, int points, Image image, String subject) {
+		super(x, y, health, points, image);
 		this.subject = subject;
 	}
 	
