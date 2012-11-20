@@ -18,4 +18,9 @@ public class Protractor extends Weapon {
 		return;
 	}
 
+	@Override
+	public String getWeaponName() {
+		return "protractor";
+	}
+
 }

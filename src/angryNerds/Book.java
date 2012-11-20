@@ -26,4 +26,9 @@ public class Book extends Weapon {
 		return;
 	}
 
+	@Override
+	public String getWeaponName() {
+		return "book";
+	}
+
 }
