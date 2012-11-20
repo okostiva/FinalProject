@@ -62,6 +62,30 @@ public class TestGame {
 	@Test
 	public void testToss() {
 		// testing the change of location after a specified time...
+		nerd.AddWeapon(book);
+		nerd.AddWeapon(pencil);
+		nerd.AddWeapon(prot);
+		nerd.toss(0, 0);
+		nerd.toss(1, 2);
+		nerd.toss(5, 10);
+		Assert.assertEquals(0, nerd.getWeapons().size());
+		
+		nerd.AddWeapon(book);
+		nerd.AddWeapon(pencil);
+		nerd.AddWeapon(prot);
+		nerd.toss(45, 10);
+		Assert.assertEquals(0, window.getHealth());
+		nerd.toss(60, 50);
+		Assert.assertEquals(46, bully.getHealth());
+		nerd.toss(89, 100);
+		
+		int expectedWindowHealth = window.getHealth();
+		int expectedBullyHealth = bully.getHealth();
+		int expectedExamHealth = exam.getHealth();
+		
+		Assert.assertEquals(expectedWindowHealth, window.getHealth());
+		Assert.assertEquals(expectedBullyHealth, bully.getHealth());
+		Assert.assertEquals(expectedExamHealth, exam.getHealth());
 	}
 	
 	//These are the tests to reinforce the math problems

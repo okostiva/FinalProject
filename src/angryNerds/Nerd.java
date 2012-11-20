@@ -50,7 +50,7 @@ public class Nerd {
 		return weapons;
 	}
 	
-	public void toss(int angle, int power, Weapon weapon) {
+	public void toss(int angle, int power) {
 		return;
 	}
 }
