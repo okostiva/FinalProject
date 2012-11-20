@@ -95,50 +95,50 @@ public class TestGame {
 		
 		controlPanel.setAngle("45");
 		controlPanel.setPower("10");
-		double expectedX = Math.cos(45.0)*10.0;
-		double expectedY = Math.sin(45.0)*10.0;
+		double expectedX = Math.cos(Math.toRadians(45.0))*10.0;
+		double expectedY = Math.sin(Math.toRadians(45.0))*10.0;
 		Assert.assertEquals(expectedX, controlPanel.getVelocityX());
 		Assert.assertEquals(expectedY, controlPanel.getVelocityY());
 		
 		controlPanel.setAngle("30");
 		controlPanel.setPower("10");
-		expectedX = Math.cos(30.0)*10.0;
-		expectedY = Math.sin(30.0)*10.0;
+		expectedX = Math.cos(Math.toRadians(30.0))*10.0;
+		expectedY = Math.sin(Math.toRadians(30.0))*10.0;
 		Assert.assertEquals(expectedX, controlPanel.getVelocityX());
 		Assert.assertEquals(expectedY, controlPanel.getVelocityY());	
 		
 		controlPanel.setAngle("0");
 		controlPanel.setPower("10");
-		expectedX = Math.cos(0.0)*10.0;
-		expectedY = Math.sin(0.0)*10.0;
+		expectedX = Math.cos(Math.toRadians(0.0))*10.0;
+		expectedY = Math.sin(Math.toRadians(0.0))*10.0;
 		Assert.assertEquals(expectedX, controlPanel.getVelocityX());
 		Assert.assertEquals(expectedY, controlPanel.getVelocityY());
 		
 		controlPanel.setAngle("90");
 		controlPanel.setPower("10");
-		expectedX = Math.cos(90.0)*10.0;
-		expectedY = Math.sin(90.0)*10.0;
+		expectedX = Math.cos(Math.toRadians(90.0))*10.0;
+		expectedY = Math.sin(Math.toRadians(90.0))*10.0;
 		Assert.assertEquals(expectedX, controlPanel.getVelocityX());
 		Assert.assertEquals(expectedY, controlPanel.getVelocityY());
 		
 		controlPanel.setAngle("30");
 		controlPanel.setPower("100");
-		expectedX = Math.cos(30.0)*100.0;
-		expectedY = Math.sin(30.0)*100.0;
+		expectedX = Math.cos(Math.toRadians(30.0))*100.0;
+		expectedY = Math.sin(Math.toRadians(30.0))*100.0;
 		Assert.assertEquals(expectedX, controlPanel.getVelocityX());
 		Assert.assertEquals(expectedY, controlPanel.getVelocityY());
 		
 		controlPanel.setAngle("30");
 		controlPanel.setPower("10");
-		expectedX = Math.cos(30.0)*0.0;
-		expectedY = Math.sin(30.0)*0.0;
+		expectedX = Math.cos(Math.toRadians(30.0))*0.0;
+		expectedY = Math.sin(Math.toRadians(30.0))*0.0;
 		Assert.assertEquals(expectedX, controlPanel.getVelocityX());
 		Assert.assertEquals(expectedY, controlPanel.getVelocityY());
 		
 		controlPanel.setAngle("30");
 		controlPanel.setPower("70");
-		expectedX = Math.cos(30.0)*70.0;
-		expectedY = Math.sin(30.0)*70.0;
+		expectedX = Math.cos(Math.toRadians(30.0))*70.0;
+		expectedY = Math.sin(Math.toRadians(30.0))*70.0;
 		Assert.assertEquals(expectedX, controlPanel.getVelocityX());
 		Assert.assertEquals(expectedY, controlPanel.getVelocityY());
 	}
