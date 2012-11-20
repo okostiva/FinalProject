@@ -9,8 +9,8 @@ public class Pencil extends Weapon {
 		super();
 	}
 
-	public Pencil(int damage, String imagePath) {
-		super (damage, imagePath);
+	public Pencil(int damage, int level, WEAPON_TYPE weaponType, String imagePath) {
+		super (damage, level, weaponType, imagePath);
 	}
 	
 	public void draw(Graphics g) 

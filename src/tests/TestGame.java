@@ -1,4 +1,6 @@
 package tests;
+import java.util.ArrayList;
+
 import junit.framework.Assert;
 
 import org.junit.BeforeClass;
@@ -8,9 +10,13 @@ import angryNerds.Book;
 import angryNerds.Bully;
 import angryNerds.ControlPanel;
 import angryNerds.Exam;
+import angryNerds.GameBoard;
 import angryNerds.Nerd;
 import angryNerds.Pencil;
 import angryNerds.Protractor;
+import angryNerds.Target;
+import angryNerds.Weapon;
+import angryNerds.Weapon.WEAPON_TYPE;
 import angryNerds.Window;
 
 
@@ -26,12 +32,12 @@ public class TestGame {
 	@BeforeClass
 	public void beforeTest () {
 		nerd = new Nerd("NERD", "");
-		book = new Book(50, "", "MATH");
-		pencil = new Pencil(20, "");
-		prot = new Protractor(30, "");
-		window = new Window(20, 20, 45, 100, "");
-		bully = new Bully(40, 30, 66, 150, "", "BULLY");
-		exam = new Exam(50, 30, 88, 200, "", "PHYSICS");
+		book = new Book(50, 1, WEAPON_TYPE.BOOK, "", "MATH");
+		pencil = new Pencil(20, 1, WEAPON_TYPE.PENCIL, "");
+		prot = new Protractor(30, 1, WEAPON_TYPE.PROTRACTOR, "");
+		window = new Window(20, 20, 45, 100, 1, "");
+		bully = new Bully(40, 30, 66, 150, 1, "", "BULLY");
+		exam = new Exam(50, 30, 88, 200, 1, "", "PHYSICS");
 	}
 	
 	@Test
@@ -178,6 +184,58 @@ public class TestGame {
 	public void testLoadConfigs() {
 		// Tests to make sure the code is loading the configuration files correctly
 		// We need a way to incorporate "level"
-		Assert.assertEquals(25, window.getX());
+		GameBoard gameboard = new GameBoard();
+		ArrayList<Target> targets = gameboard.getTargets();
+		ArrayList<Weapon> weapons = gameboard.getNerd().getWeapons();
+		int level1Weapons = 0; 
+		int level10targets = 0;
+		
+		Assert.assertEquals(10, targets.size());
+		
+		Assert.assertEquals(25, targets.get(0).getX());
+		Assert.assertEquals(25, targets.get(0).getY());
+		Assert.assertEquals(1, targets.get(0).getLevel());
+		
+		Assert.assertEquals(78, targets.get(0).getX());
+		Assert.assertEquals(78, targets.get(0).getY());
+		Assert.assertEquals(5, targets.get(0).getLevel());
+		
+		Assert.assertEquals(85, targets.get(0).getX());
+		Assert.assertEquals(85, targets.get(0).getY());
+		Assert.assertEquals(10, targets.get(0).getLevel());
+		
+		for (Target t : targets)
+		{
+			if (t.getLevel() == 10)
+			{
+				level10targets++;
+			}
+		}
+		
+		Assert.assertEquals(5, level10targets);
+		
+		Assert.assertEquals(10, weapons.size());
+		
+		Assert.assertEquals(15, weapons.get(0).getDamage());
+		Assert.assertEquals(10, weapons.get(0).getLevel());
+		Assert.assertEquals(WEAPON_TYPE.PENCIL, weapons.get(0).getWeaponType());
+		
+		Assert.assertEquals(15, weapons.get(0).getDamage());
+		Assert.assertEquals(10, weapons.get(0).getLevel());
+		Assert.assertEquals(WEAPON_TYPE.BOOK, weapons.get(0).getWeaponType());
+		
+		Assert.assertEquals(15, weapons.get(0).getDamage());
+		Assert.assertEquals(5, weapons.get(0).getLevel());
+		Assert.assertEquals(WEAPON_TYPE.PROTRACTOR, weapons.get(0).getWeaponName());
+		
+		for (Weapon w : weapons)
+		{
+			if (w.getLevel() == 10)
+			{
+				level1Weapons++;
+			}
+		}
+		
+		Assert.assertEquals(5, level1Weapons);
 	}
 }

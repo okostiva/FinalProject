@@ -12,11 +12,14 @@ import javax.swing.JOptionPane;
 
 public class GameBoard extends JFrame {
 
+	public static final int BOARD_WIDTH = 800;
+	public static final int BOARD_HEIGHT = 400;
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -4580170113745359348L;
 	private Nerd nerd;
+	private int level = 1;
 	private ControlPanel controlPanel;
 	private ArrayList<Target> targets;
 	HelpNotes hp = null;
@@ -27,7 +30,7 @@ public class GameBoard extends JFrame {
 		controlPanel = new ControlPanel();
 		targets = new ArrayList<Target>();
 		
-		setSize(200, 200);
+		setSize(BOARD_WIDTH, BOARD_HEIGHT);
 		this.add(controlPanel, BorderLayout.SOUTH);
 		JMenuBar menu = new JMenuBar();
 		setJMenuBar(menu);
@@ -72,6 +75,14 @@ public class GameBoard extends JFrame {
 
 	public Target getTarget(int index) {
 		return targets.get(index);
+	}
+	
+	public ArrayList<Target> getTargets() {
+		return targets;
+	}
+	
+	public Nerd getNerd() {
+		return nerd;
 	}
 	
 	/**

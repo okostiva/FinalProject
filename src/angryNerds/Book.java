@@ -11,8 +11,8 @@ public class Book extends Weapon {
 		subject = "???";
 	}
 	
-	public Book(int damage, String imgPath, String subject) {
-		super(damage, imgPath);
+	public Book(int damage, int level, WEAPON_TYPE weaponType, String imgPath, String subject) {
+		super(damage, level, weaponType, imgPath);
 		this.subject = subject;
 	}
 	

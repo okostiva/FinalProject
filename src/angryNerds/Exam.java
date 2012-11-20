@@ -13,13 +13,13 @@ public class Exam extends Target {
 		subject = "???";
 	}
 	
-	public Exam(int x, int y, int health, int points, String imgPath, String subject) {
-		super(x, y, health, points, imgPath);
+	public Exam(int x, int y, int health, int points, int level, String imgPath, String subject) {
+		super(x, y, health, points, level, imgPath);
 		this.subject = subject;
 	}
 	
-	public Exam(int x, int y, int health, int points, Image image, String subject) {
-		super(x, y, health, points, image);
+	public Exam(int x, int y, int health, int points, int level, Image image, String subject) {
+		super(x, y, health, points, level, image);
 		this.subject = subject;
 	}
 	

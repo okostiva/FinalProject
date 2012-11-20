@@ -8,8 +8,8 @@ public class Protractor extends Weapon {
 		super();
 	}
 	
-	public Protractor(int damage, String imgPath) {
-		super(damage, imgPath);
+	public Protractor(int damage, int level, WEAPON_TYPE weaponType, String imgPath) {
+		super(damage, level, weaponType, imgPath);
 	}
 	
 	@Override

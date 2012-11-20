@@ -13,13 +13,13 @@ public class Bully extends Target {
 		this.name = "???";
 	}
 	
-	public Bully(int x, int y, int health, int points, String imgPath, String name) {
-		super(x, y, health, points, imgPath);
+	public Bully(int x, int y, int health, int points, int level, String imgPath, String name) {
+		super(x, y, health, points, level, imgPath);
 		this.name = name;
 	}
 	
-	public Bully(int x, int y, int health, int points, Image image, String name) {
-		super(x, y, health, points, image);
+	public Bully(int x, int y, int health, int points, int level, Image image, String name) {
+		super(x, y, health, points, level, image);
 		this.name = name;
 	}
 	
