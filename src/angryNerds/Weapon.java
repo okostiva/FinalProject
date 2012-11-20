@@ -36,5 +36,7 @@ public abstract class Weapon {
 		return this.damage;
 	}
 	
+	public abstract String getWeaponName();
+	
 	public abstract void draw(Graphics g);
 }

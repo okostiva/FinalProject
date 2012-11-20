@@ -17,4 +17,9 @@ public class Pencil extends Weapon {
 	{
 		return;
 	}
+
+	@Override
+	public String getWeaponName() {
+		return "pencil";
+	}
 }
