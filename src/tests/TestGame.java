@@ -75,8 +75,10 @@ public class TestGame {
 		nerd.AddWeapon(prot);
 		nerd.toss(45, 10);
 		Assert.assertEquals(0, window.getHealth());
+		Assert.assertFalse(window.notDestroyed);
 		nerd.toss(60, 50);
 		Assert.assertEquals(46, bully.getHealth());
+		Assert.assertTrue(bully.notDestroyed);
 		nerd.toss(89, 100);
 		
 		int expectedWindowHealth = window.getHealth();
@@ -84,8 +86,11 @@ public class TestGame {
 		int expectedExamHealth = exam.getHealth();
 		
 		Assert.assertEquals(expectedWindowHealth, window.getHealth());
+		Assert.assertFalse(window.notDestroyed);
 		Assert.assertEquals(expectedBullyHealth, bully.getHealth());
+		Assert.assertTrue(bully.notDestroyed);
 		Assert.assertEquals(expectedExamHealth, exam.getHealth());
+		Assert.assertTrue(exam.notDestroyed);
 	}
 	
 	//These are the tests to reinforce the math problems
