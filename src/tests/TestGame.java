@@ -1,8 +1,4 @@
 package tests;
-import static org.junit.Assert.*;
-
-import java.util.Timer;
-
 import junit.framework.Assert;
 
 import org.junit.BeforeClass;
@@ -10,11 +6,12 @@ import org.junit.Test;
 
 import angryNerds.Book;
 import angryNerds.Bully;
+import angryNerds.ControlPanel;
+import angryNerds.Exam;
 import angryNerds.Nerd;
 import angryNerds.Pencil;
 import angryNerds.Protractor;
 import angryNerds.Window;
-import angryNerds.Exam;
 
 
 public class TestGame {
@@ -65,6 +62,87 @@ public class TestGame {
 	@Test
 	public void testToss() {
 		// testing the change of location after a specified time...
+	}
+	
+	//These are the tests to reinforce the math problems
+	//This test is for the directional velocity (HARD)
+	public void testVelocityProblems() {
+		ControlPanel controlPanel = new ControlPanel();
+		
+		controlPanel.setAngle("45");
+		controlPanel.setPower("10");
+		double expectedX = Math.cos(45.0)*10.0;
+		double expectedY = Math.sin(45.0)*10.0;
+		Assert.assertEquals(expectedX, controlPanel.getVelocityX());
+		Assert.assertEquals(expectedY, controlPanel.getVelocityY());
+		
+		controlPanel.setAngle("30");
+		controlPanel.setPower("10");
+		expectedX = Math.cos(30.0)*10.0;
+		expectedY = Math.sin(30.0)*10.0;
+		Assert.assertEquals(expectedX, controlPanel.getVelocityX());
+		Assert.assertEquals(expectedY, controlPanel.getVelocityY());	
+		
+		controlPanel.setAngle("0");
+		controlPanel.setPower("10");
+		expectedX = Math.cos(0.0)*10.0;
+		expectedY = Math.sin(0.0)*10.0;
+		Assert.assertEquals(expectedX, controlPanel.getVelocityX());
+		Assert.assertEquals(expectedY, controlPanel.getVelocityY());
+		
+		controlPanel.setAngle("90");
+		controlPanel.setPower("10");
+		expectedX = Math.cos(90.0)*10.0;
+		expectedY = Math.sin(90.0)*10.0;
+		Assert.assertEquals(expectedX, controlPanel.getVelocityX());
+		Assert.assertEquals(expectedY, controlPanel.getVelocityY());
+		
+		controlPanel.setAngle("30");
+		controlPanel.setPower("100");
+		expectedX = Math.cos(30.0)*100.0;
+		expectedY = Math.sin(30.0)*100.0;
+		Assert.assertEquals(expectedX, controlPanel.getVelocityX());
+		Assert.assertEquals(expectedY, controlPanel.getVelocityY());
+		
+		controlPanel.setAngle("30");
+		controlPanel.setPower("10");
+		expectedX = Math.cos(30.0)*0.0;
+		expectedY = Math.sin(30.0)*0.0;
+		Assert.assertEquals(expectedX, controlPanel.getVelocityX());
+		Assert.assertEquals(expectedY, controlPanel.getVelocityY());
+		
+		controlPanel.setAngle("30");
+		controlPanel.setPower("70");
+		expectedX = Math.cos(30.0)*70.0;
+		expectedY = Math.sin(30.0)*70.0;
+		Assert.assertEquals(expectedX, controlPanel.getVelocityX());
+		Assert.assertEquals(expectedY, controlPanel.getVelocityY());
+	}
+	
+	//This test is for the angular difference (EASY)
+	public void testAngleDifferenceProblems() {
+		ControlPanel controlPanel  = new ControlPanel();
+		
+		controlPanel.setAngle("45");
+		Assert.assertEquals(45, controlPanel.getAngleDifference());
+		
+		controlPanel.setAngle("90");
+		Assert.assertEquals(0, controlPanel.getAngleDifference());
+		
+		controlPanel.setAngle("0");
+		Assert.assertEquals(90, controlPanel.getAngleDifference());
+		
+		controlPanel.setAngle("60");
+		Assert.assertEquals(30, controlPanel.getAngleDifference());
+		
+		controlPanel.setAngle("30");
+		Assert.assertEquals(60, controlPanel.getAngleDifference());
+		
+		controlPanel.setAngle("73");
+		Assert.assertEquals(17, controlPanel.getAngleDifference());
+		
+		controlPanel.setAngle("24");
+		Assert.assertEquals(66, controlPanel.getAngleDifference());
 	}
 	
 	@Test
