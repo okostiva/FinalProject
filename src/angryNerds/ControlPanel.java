@@ -9,6 +9,9 @@ import javax.swing.JTextArea;
 
 public class ControlPanel extends JPanel {
 
+	public enum Difficulty { EASY, HARD };
+	public static final int MAX_ANGLE = 90;
+	
 	/**
 	 * 
 	 */
@@ -17,6 +20,7 @@ public class ControlPanel extends JPanel {
 	private JTextArea angleInput, powerInput;
 	private JLabel angleLabel, powerLabel;
 	private JButton enterData;
+	private Difficulty difficulty = Difficulty.EASY;
 	
 	public ControlPanel() {
 		// TODO Auto-generated constructor stub
@@ -42,5 +46,35 @@ public class ControlPanel extends JPanel {
 	
 	public int getAngle() {
 		return angle;
+	}
+	
+	public Difficulty getDifficulty() {
+		return difficulty;
+	}
+	
+	public double getVelocityX() {
+		return 0.0;
+	}
+	
+	public double getVelocityY() {
+		return 0.0;
+	}
+	
+	public double getAngleDifference() {
+		return 0.0;
+	}
+	
+	public void setDifficulty(Difficulty difficulty) {
+		this.difficulty = difficulty;
+	}
+	
+	//Methods below are for testing purposes only and should not be used during 
+	//implementation of the game
+	public void setAngle(String angle) {
+		this.angleInput.setText(angle);
+	}
+	
+	public void setPower(String power) {
+		this.powerInput.setText(power);
 	}
 }

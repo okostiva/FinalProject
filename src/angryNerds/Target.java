@@ -72,6 +72,7 @@ public abstract class Target {
 	public void setY(int y) {
 		this.y = y;;
 	}
+	
 	public void damageDone(int damage) {
 		this.health -= damage;
 		if (health <= 0)
