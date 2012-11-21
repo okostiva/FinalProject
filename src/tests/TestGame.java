@@ -21,16 +21,16 @@ import angryNerds.Window;
 
 
 public class TestGame {
-	Nerd nerd;
-	Book book;
-	Pencil pencil;
-	Protractor prot;
-	Window window;
-	Bully bully;
-	Exam exam;
+	private static Nerd nerd;
+	private static Book book;
+	private static Pencil pencil;
+	private static Protractor prot;
+	private static Window window;
+	private static Bully bully;
+	private static Exam exam;
 	
 	@BeforeClass
-	public void beforeTest () {
+	public static void beforeTest () {
 		nerd = new Nerd("NERD", "");
 		book = new Book(50, 1, WEAPON_TYPE.BOOK, "", "MATH");
 		pencil = new Pencil(20, 1, WEAPON_TYPE.PENCIL, "");
@@ -101,6 +101,7 @@ public class TestGame {
 	
 	//These are the tests to reinforce the math problems
 	//This test is for the directional velocity (HARD)
+	@Test
 	public void testVelocityProblems() {
 		ControlPanel controlPanel = new ControlPanel();
 		
@@ -155,6 +156,7 @@ public class TestGame {
 	}
 	
 	//This test is for the angular difference (EASY)
+	@Test
 	public void testAngleDifferenceProblems() {
 		ControlPanel controlPanel  = new ControlPanel();
 		
@@ -190,19 +192,25 @@ public class TestGame {
 		int level1Weapons = 0; 
 		int level10targets = 0;
 		
-		Assert.assertEquals(10, targets.size());
+		Assert.assertEquals(25, targets.size());
 		
 		Assert.assertEquals(25, targets.get(0).getX());
 		Assert.assertEquals(25, targets.get(0).getY());
 		Assert.assertEquals(1, targets.get(0).getLevel());
+		Assert.assertEquals(50, targets.get(0).getHealth());
+		Assert.assertEquals(50, targets.get(0).getPoints());
 		
-		Assert.assertEquals(78, targets.get(0).getX());
-		Assert.assertEquals(78, targets.get(0).getY());
-		Assert.assertEquals(5, targets.get(0).getLevel());
+		Assert.assertEquals(30, targets.get(4).getX());
+		Assert.assertEquals(100, targets.get(4).getY());
+		Assert.assertEquals(3, targets.get(4).getLevel());
+		Assert.assertEquals(100, targets.get(0).getHealth());
+		Assert.assertEquals(100, targets.get(0).getPoints());
 		
-		Assert.assertEquals(85, targets.get(0).getX());
-		Assert.assertEquals(85, targets.get(0).getY());
-		Assert.assertEquals(10, targets.get(0).getLevel());
+		Assert.assertEquals(50, targets.get(24).getX());
+		Assert.assertEquals(90, targets.get(24).getY());
+		Assert.assertEquals(10, targets.get(24).getLevel());
+		Assert.assertEquals(50, targets.get(0).getHealth());
+		Assert.assertEquals(50, targets.get(0).getPoints());
 		
 		for (Target t : targets)
 		{
@@ -214,19 +222,19 @@ public class TestGame {
 		
 		Assert.assertEquals(5, level10targets);
 		
-		Assert.assertEquals(10, weapons.size());
+		Assert.assertEquals(70, weapons.size());
 		
-		Assert.assertEquals(15, weapons.get(0).getDamage());
-		Assert.assertEquals(10, weapons.get(0).getLevel());
+		Assert.assertEquals(20, weapons.get(0).getDamage());
+		Assert.assertEquals(1, weapons.get(0).getLevel());
 		Assert.assertEquals(WEAPON_TYPE.PENCIL, weapons.get(0).getWeaponType());
 		
-		Assert.assertEquals(15, weapons.get(0).getDamage());
-		Assert.assertEquals(10, weapons.get(0).getLevel());
-		Assert.assertEquals(WEAPON_TYPE.BOOK, weapons.get(0).getWeaponType());
+		Assert.assertEquals(50, weapons.get(22).getDamage());
+		Assert.assertEquals(3, weapons.get(22).getLevel());
+		Assert.assertEquals(WEAPON_TYPE.BOOK, weapons.get(22).getWeaponType());
 		
-		Assert.assertEquals(15, weapons.get(0).getDamage());
-		Assert.assertEquals(5, weapons.get(0).getLevel());
-		Assert.assertEquals(WEAPON_TYPE.PROTRACTOR, weapons.get(0).getWeaponName());
+		Assert.assertEquals(35, weapons.get(69).getDamage());
+		Assert.assertEquals(10, weapons.get(69).getLevel());
+		Assert.assertEquals(WEAPON_TYPE.PROTRACTOR, weapons.get(69).getWeaponName());
 		
 		for (Weapon w : weapons)
 		{
@@ -236,6 +244,6 @@ public class TestGame {
 			}
 		}
 		
-		Assert.assertEquals(5, level1Weapons);
+		Assert.assertEquals(6, level1Weapons);
 	}
 }
