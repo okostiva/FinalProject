@@ -53,15 +53,15 @@ public class ControlPanel extends JPanel {
 	}
 	
 	public double getVelocityX() {
-		return 0.0;
+		return Math.cos(Math.toRadians(this.angle))*this.power;
 	}
 	
 	public double getVelocityY() {
-		return 0.0;
+		return Math.sin(Math.toRadians(this.angle))*this.power;
 	}
 	
 	public double getAngleDifference() {
-		return 0.0;
+		return (90 - this.angle);
 	}
 	
 	public void setDifficulty(Difficulty difficulty) {

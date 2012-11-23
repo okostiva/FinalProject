@@ -29,15 +29,16 @@ public class TestGame {
 	private static Bully bully;
 	private static Exam exam;
 	
+	// There are only windows in level one??
 	@BeforeClass
 	public static void beforeTest () {
 		nerd = new Nerd("NERD", "");
 		book = new Book(50, 1, WEAPON_TYPE.BOOK, "", "MATH");
-		pencil = new Pencil(20, 1, WEAPON_TYPE.PENCIL, "");
-		prot = new Protractor(30, 1, WEAPON_TYPE.PROTRACTOR, "");
+		pencil = new Pencil(20, 2, WEAPON_TYPE.PENCIL, "");
+		prot = new Protractor(30, 2, WEAPON_TYPE.PROTRACTOR, "");
 		window = new Window(20, 20, 45, 100, 1, "");
-		bully = new Bully(40, 30, 66, 150, 1, "", "BULLY");
-		exam = new Exam(50, 30, 88, 200, 1, "", "PHYSICS");
+		bully = new Bully(40, 30, 66, 150, 2, "", "BULLY");
+		exam = new Exam(50, 30, 88, 200, 4, "", "PHYSICS");
 	}
 	
 	@Test
@@ -76,12 +77,15 @@ public class TestGame {
 		nerd.toss(5, 10);
 		Assert.assertEquals(0, nerd.getWeapons().size());
 		
+		// Testing in level 1
 		nerd.AddWeapon(book);
-		nerd.AddWeapon(pencil);
-		nerd.AddWeapon(prot);
 		nerd.toss(45, 10);
 		Assert.assertEquals(0, window.getHealth());
 		Assert.assertFalse(window.notDestroyed);
+		
+		// Testing level 2
+		nerd.AddWeapon(pencil);
+		nerd.AddWeapon(prot);
 		nerd.toss(60, 50);
 		Assert.assertEquals(46, bully.getHealth());
 		Assert.assertTrue(bully.notDestroyed);
