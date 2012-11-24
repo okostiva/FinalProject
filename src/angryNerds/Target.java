@@ -27,6 +27,7 @@ public abstract class Target {
 		this.y = y;
 		this.health = health;
 		this.points = points;
+		this.level = level;
 		this.image = image;
 		this.notDestroyed = true;
 	}
@@ -36,6 +37,7 @@ public abstract class Target {
 		this.y = y;
 		this.health = health;
 		this.points = points;
+		this.level = level;
 		this.image = Toolkit.getDefaultToolkit().getImage(imagePath);
 		this.notDestroyed = true;
 	}

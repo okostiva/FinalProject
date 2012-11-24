@@ -68,9 +68,6 @@ public class TestGame {
 	@Test
 	public void testToss() {
 		// testing the change of location after a specified time...
-		nerd.AddWeapon(book);
-		nerd.AddWeapon(pencil);
-		nerd.AddWeapon(prot);
 		nerd.toss(0, 0);
 		nerd.toss(1, 2);
 		nerd.toss(5, 10);
@@ -103,7 +100,7 @@ public class TestGame {
 	//This test is for the directional velocity (HARD)
 	@Test
 	public void testVelocityProblems() {
-		ControlPanel controlPanel = new ControlPanel();
+		ControlPanel controlPanel = new ControlPanel(new GameBoard());
 		
 		controlPanel.setAngle("45");
 		controlPanel.setPower("10");
@@ -158,7 +155,7 @@ public class TestGame {
 	//This test is for the angular difference (EASY)
 	@Test
 	public void testAngleDifferenceProblems() {
-		ControlPanel controlPanel  = new ControlPanel();
+		ControlPanel controlPanel  = new ControlPanel(new GameBoard());
 		
 		controlPanel.setAngle("45");
 		Assert.assertEquals(45, controlPanel.getAngleDifference());
@@ -203,14 +200,14 @@ public class TestGame {
 		Assert.assertEquals(30, targets.get(4).getX());
 		Assert.assertEquals(100, targets.get(4).getY());
 		Assert.assertEquals(3, targets.get(4).getLevel());
-		Assert.assertEquals(100, targets.get(0).getHealth());
-		Assert.assertEquals(100, targets.get(0).getPoints());
+		Assert.assertEquals(100, targets.get(4).getHealth());
+		Assert.assertEquals(100, targets.get(4).getPoints());
 		
 		Assert.assertEquals(50, targets.get(24).getX());
 		Assert.assertEquals(90, targets.get(24).getY());
 		Assert.assertEquals(10, targets.get(24).getLevel());
-		Assert.assertEquals(50, targets.get(0).getHealth());
-		Assert.assertEquals(50, targets.get(0).getPoints());
+		Assert.assertEquals(75, targets.get(24).getHealth());
+		Assert.assertEquals(75, targets.get(24).getPoints());
 		
 		for (Target t : targets)
 		{
@@ -234,11 +231,11 @@ public class TestGame {
 		
 		Assert.assertEquals(35, weapons.get(69).getDamage());
 		Assert.assertEquals(10, weapons.get(69).getLevel());
-		Assert.assertEquals(WEAPON_TYPE.PROTRACTOR, weapons.get(69).getWeaponName());
+		Assert.assertEquals(WEAPON_TYPE.PROTRACTOR, weapons.get(69).getWeaponType());
 		
 		for (Weapon w : weapons)
 		{
-			if (w.getLevel() == 10)
+			if (w.getLevel() == 1)
 			{
 				level1Weapons++;
 			}

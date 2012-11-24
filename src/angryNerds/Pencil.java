@@ -1,4 +1,5 @@
 package angryNerds;
+import java.awt.Color;
 import java.awt.Graphics;
 
 
@@ -15,6 +16,15 @@ public class Pencil extends Weapon {
 	
 	public void draw(Graphics g) 
 	{
+		g.setColor(Color.BLUE);
+		g.fillOval(10, 10, 20, 20);
+		return;
+	}
+	
+	public void paintComponent(Graphics g) 
+	{
+		super.paintComponent(g);
+		draw(g);
 		return;
 	}
 
