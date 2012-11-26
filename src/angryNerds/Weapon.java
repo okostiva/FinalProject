@@ -14,7 +14,7 @@ public abstract class Weapon extends JPanel {
 	protected int damage;
 	protected Image image;
 	protected int x = 10;
-	protected int y = GameBoard.BOARD_HEIGHT - 120; 
+	protected int y = GameBoard.BOARD_HEIGHT - 140; 
 	protected int level;
 	protected WEAPON_TYPE weaponType;
 	

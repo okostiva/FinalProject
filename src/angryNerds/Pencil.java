@@ -17,15 +17,15 @@ public class Pencil extends Weapon {
 	
 	public void draw(Graphics g) 
 	{
-		//if (image == null)
-		//{
+		if (image == null)
+		{
 			g.setColor(Color.BLUE);
 			g.fillOval(x, y, 20, 20);
-		//}
-		//else 
-		//{
-		//	g.drawImage(image, x, y, null);
-		//}
+		}
+		else 
+		{
+			g.drawImage(image, x, y, null);
+		}
 		return;
 	}
 	

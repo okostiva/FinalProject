@@ -20,7 +20,7 @@ import angryNerds.Weapon.WEAPON_TYPE;
 public class GameBoard extends JFrame {
 
 	public static final int BOARD_WIDTH = 800;
-	public static final int BOARD_HEIGHT = 400;
+	public static final int BOARD_HEIGHT = 600;
 	public static final String WEAPON_CONFIG = "weapons.csv";
 	public static final String TARGET_CONFIG = "targets.csv";
 	/**
@@ -49,7 +49,8 @@ public class GameBoard extends JFrame {
 		
 		setSize(BOARD_WIDTH, BOARD_HEIGHT);
 		
-		controlPanel.setBounds(0, 315, 800, 25);
+		controlPanel.setBounds(0, BOARD_HEIGHT-85, BOARD_WIDTH, 25);
+		controlPanel.setOpaque(true);
 		this.add(controlPanel);
 		
 		//this.add(controlPanel, BorderLayout.PAGE_END);
@@ -114,7 +115,7 @@ public class GameBoard extends JFrame {
 	}
 	
 	public void startGame() {				
-		this.updateDrawing(6, 6);
+		this.updateDrawing(3,3);
 		this.setTargets();
 		this.nextWeapon();
 		
@@ -250,7 +251,7 @@ public class GameBoard extends JFrame {
 	public void updateDrawing(int dx, int dy) {
 		this.dx = dx;
 		this.dy = dy;
-		timer = new Timer(1, new TimerListener());
+		timer = new Timer(10, new TimerListener());
 		//timer.start();  
 	}
 	
@@ -263,6 +264,13 @@ public class GameBoard extends JFrame {
 			{
 				currentTargets.add(t);
 			}
+		}
+		
+		for (Target t : currentTargets)
+		{
+			t.setBounds(0, 0, BOARD_WIDTH, BOARD_HEIGHT-50);
+			this.add(t);
+			repaint();
 		}
 	}
 	
@@ -280,7 +288,7 @@ public class GameBoard extends JFrame {
 		else
 		{			
 			currentWeapon = nerd.getWeapon(0);
-			currentWeapon.setBounds(0,0,800,350);
+			currentWeapon.setBounds(0, 0, BOARD_WIDTH, BOARD_HEIGHT-50);
 			this.add(currentWeapon);
 			
 			if (currentWeapon.getLevel() != this.level) {

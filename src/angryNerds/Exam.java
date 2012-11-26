@@ -30,7 +30,14 @@ public class Exam extends Target {
 	@Override
 	public void draw(Graphics g)
 	{
+		g.drawImage(image, x, y, null);
+		
 		return;
 	}
-
+	
+	public void paintComponent(Graphics g)
+	{
+		this.draw(g);
+		return;
+	}
 }
