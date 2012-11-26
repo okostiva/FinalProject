@@ -29,6 +29,7 @@ public abstract class Target {
 		this.points = points;
 		this.image = image;
 		this.notDestroyed = true;
+		this.level = level;
 	}
 	
 	public Target(int x, int y, int health, int points, int level, String imagePath) {
@@ -38,6 +39,7 @@ public abstract class Target {
 		this.points = points;
 		this.image = Toolkit.getDefaultToolkit().getImage(imagePath);
 		this.notDestroyed = true;
+		this.level = level;
 	}
 	
 	public int getHealth() {

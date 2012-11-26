@@ -51,6 +51,7 @@ public class Nerd {
 	}
 	
 	public void toss(int angle, int power) {
+		weapons.remove(0);
 		return;
 	}
 }

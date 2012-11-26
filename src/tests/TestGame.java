@@ -29,7 +29,6 @@ public class TestGame {
 	private static Bully bully;
 	private static Exam exam;
 	
-	// There are only windows in level one??
 	@BeforeClass
 	public static void beforeTest () {
 		nerd = new Nerd("NERD", "");
@@ -68,28 +67,22 @@ public class TestGame {
 	
 	@Test
 	public void testToss() {
-		// testing the change of location after a specified time...
-		nerd.AddWeapon(book);
-		nerd.AddWeapon(pencil);
-		nerd.AddWeapon(prot);
 		nerd.toss(0, 0);
 		nerd.toss(1, 2);
 		nerd.toss(5, 10);
 		Assert.assertEquals(0, nerd.getWeapons().size());
 		
-		// Testing in level 1
-		nerd.AddWeapon(book);
-		nerd.toss(45, 10);
-		Assert.assertEquals(0, window.getHealth());
+		window = new Window(20, 20, 45, 100, 1, "");
+		bully = new Bully(40, 30, 66, 150, 2, "", "BULLY");
+		exam = new Exam(50, 30, 88, 200, 4, "", "PHYSICS");
+		
+		window.damageDone(book.getDamage());
+		Assert.assertTrue(window.getHealth() <= 0);
 		Assert.assertFalse(window.notDestroyed);
 		
-		// Testing level 2
-		nerd.AddWeapon(pencil);
-		nerd.AddWeapon(prot);
-		nerd.toss(60, 50);
+		bully.damageDone(pencil.getDamage());
 		Assert.assertEquals(46, bully.getHealth());
 		Assert.assertTrue(bully.notDestroyed);
-		nerd.toss(89, 100);
 		
 		int expectedWindowHealth = window.getHealth();
 		int expectedBullyHealth = bully.getHealth();
@@ -207,14 +200,14 @@ public class TestGame {
 		Assert.assertEquals(30, targets.get(4).getX());
 		Assert.assertEquals(100, targets.get(4).getY());
 		Assert.assertEquals(3, targets.get(4).getLevel());
-		Assert.assertEquals(100, targets.get(0).getHealth());
-		Assert.assertEquals(100, targets.get(0).getPoints());
+		Assert.assertEquals(100, targets.get(4).getHealth());
+		Assert.assertEquals(100, targets.get(4).getPoints());
 		
 		Assert.assertEquals(50, targets.get(24).getX());
 		Assert.assertEquals(90, targets.get(24).getY());
 		Assert.assertEquals(10, targets.get(24).getLevel());
-		Assert.assertEquals(50, targets.get(0).getHealth());
-		Assert.assertEquals(50, targets.get(0).getPoints());
+		Assert.assertEquals(75, targets.get(24).getHealth());
+		Assert.assertEquals(75, targets.get(24).getPoints());
 		
 		for (Target t : targets)
 		{
@@ -238,11 +231,11 @@ public class TestGame {
 		
 		Assert.assertEquals(35, weapons.get(69).getDamage());
 		Assert.assertEquals(10, weapons.get(69).getLevel());
-		Assert.assertEquals(WEAPON_TYPE.PROTRACTOR, weapons.get(69).getWeaponName());
+		Assert.assertEquals(WEAPON_TYPE.PROTRACTOR, weapons.get(69).getWeaponType());
 		
 		for (Weapon w : weapons)
 		{
-			if (w.getLevel() == 10)
+			if (w.getLevel() == 1)
 			{
 				level1Weapons++;
 			}
