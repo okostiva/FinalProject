@@ -1,6 +1,7 @@
 package angryNerds;
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.image.ImageObserver;
 
 
 public class Pencil extends Weapon {
@@ -16,8 +17,15 @@ public class Pencil extends Weapon {
 	
 	public void draw(Graphics g) 
 	{
-		g.setColor(Color.BLUE);
-		g.fillOval(10, 10, 20, 20);
+		//if (image == null)
+		//{
+			g.setColor(Color.BLUE);
+			g.fillOval(x, y, 20, 20);
+		//}
+		//else 
+		//{
+		//	g.drawImage(image, x, y, null);
+		//}
 		return;
 	}
 	

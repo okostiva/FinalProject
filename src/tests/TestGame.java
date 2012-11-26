@@ -32,12 +32,12 @@ public class TestGame {
 	@BeforeClass
 	public static void beforeTest () {
 		nerd = new Nerd("NERD", "");
-		book = new Book(50, 1, WEAPON_TYPE.BOOK, "", "MATH");
-		pencil = new Pencil(20, 1, WEAPON_TYPE.PENCIL, "");
-		prot = new Protractor(30, 1, WEAPON_TYPE.PROTRACTOR, "");
-		window = new Window(20, 20, 45, 100, 1, "");
-		bully = new Bully(40, 30, 66, 150, 1, "", "BULLY");
-		exam = new Exam(50, 30, 88, 200, 1, "", "PHYSICS");
+		book = new Book(50, 1, WEAPON_TYPE.BOOK, "images/book.png", "MATH");
+		pencil = new Pencil(20, 1, WEAPON_TYPE.PENCIL, "images/pencil.png");
+		prot = new Protractor(30, 1, WEAPON_TYPE.PROTRACTOR, "images/protractor.png");
+		window = new Window(20, 20, 45, 100, 1, "images/window.png");
+		bully = new Bully(40, 30, 66, 150, 1, "images/bully.png", "BULLY");
+		exam = new Exam(50, 30, 88, 200, 1, "images/exam.png", "PHYSICS");
 	}
 	
 	@Test
@@ -68,15 +68,18 @@ public class TestGame {
 	@Test
 	public void testToss() {
 		// testing the change of location after a specified time...
-		nerd.toss(0, 0);
-		nerd.toss(1, 2);
-		nerd.toss(5, 10);
+		GameBoard gameboard = new GameBoard();
+		gameboard.setNerd(nerd);
+		
+		gameboard.toss(0, 0);
+		gameboard.toss(1, 2);
+		gameboard.toss(5, 10);
 		Assert.assertEquals(0, nerd.getWeapons().size());
 		
 		nerd.AddWeapon(book);
 		nerd.AddWeapon(pencil);
 		nerd.AddWeapon(prot);
-		nerd.toss(45, 10);
+		gameboard.toss(45, 10);
 		Assert.assertEquals(0, window.getHealth());
 		Assert.assertFalse(window.notDestroyed);
 		nerd.toss(60, 50);

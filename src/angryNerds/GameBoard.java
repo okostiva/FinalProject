@@ -1,5 +1,4 @@
 package angryNerds;
-import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
@@ -29,8 +28,9 @@ public class GameBoard extends JFrame {
 	private Nerd nerd;
 	private int dx, dy;
 	private int level = 1;
+	private boolean gameover = false;
 	private ControlPanel controlPanel;
-	private ArrayList<Target> targets;
+	private ArrayList<Target> targets, currentTargets;
 	HelpNotes hp = null;
 	private Weapon currentWeapon;
 	private Timer timer;
@@ -40,10 +40,17 @@ public class GameBoard extends JFrame {
 		nerd = new Nerd();
 		controlPanel = new ControlPanel(this);
 		targets = new ArrayList<Target>();
+		currentTargets = new ArrayList<Target>();
 		timer = new Timer(1, new TimerListener());
 		
+		this.setLayout(null);
+		
 		setSize(BOARD_WIDTH, BOARD_HEIGHT);
-		this.add(controlPanel, BorderLayout.SOUTH);
+		
+		controlPanel.setBounds(0, 350, 800, 50);
+		this.add(controlPanel);
+		
+		//this.add(controlPanel, BorderLayout.PAGE_END);
 		JMenuBar menu = new JMenuBar();
 		setJMenuBar(menu);
 		menu.add(createFileMenu());
@@ -51,8 +58,9 @@ public class GameBoard extends JFrame {
 		loadWeapons();
 		loadTargets();
 		
-		currentWeapon = nerd.getWeapon(0);
-		this.add(currentWeapon, BorderLayout.CENTER);
+		//this.add(currentWeapon, BorderLayout.CENTER);
+		//this.add(targets.get(0), BorderLayout.CENTER);
+		//this.add(targets.get(1), BorderLayout.PAGE_START);
 	}
 	
 	private JMenu createFileMenu() {
@@ -103,8 +111,12 @@ public class GameBoard extends JFrame {
 		return nerd;
 	}
 	
-	public void startGame() {
+	public void startGame() {				
 		this.updateDrawing(6, 6);
+		this.setTargets();
+		this.nextWeapon();
+		
+		repaint();
 	}
 	
 	public void loadWeapons() {
@@ -133,15 +145,15 @@ public class GameBoard extends JFrame {
 						
 						if (type.equalsIgnoreCase("Pencil"))
 						{
-							tempWeapon = new Pencil(damage, level, WEAPON_TYPE.PENCIL, "");
+							tempWeapon = new Pencil(damage, level, WEAPON_TYPE.PENCIL, "images/pencil.png");
 						}
 						else if (type.equalsIgnoreCase("Protractor"))
 						{
-							tempWeapon = new Protractor(damage, level, WEAPON_TYPE.PROTRACTOR, "");
+							tempWeapon = new Protractor(damage, level, WEAPON_TYPE.PROTRACTOR, "images/protractor.png");
 						}
 						else if (type.equalsIgnoreCase("Book"))
 						{
-							tempWeapon = new Book(damage, level, WEAPON_TYPE.BOOK, "", "MATH");
+							tempWeapon = new Book(damage, level, WEAPON_TYPE.BOOK, "images/book.png", "MATH");
 						}
 						else 
 						{
@@ -196,15 +208,15 @@ public class GameBoard extends JFrame {
 						
 					if (type.equalsIgnoreCase("Window"))
 					{
-						tempTarget = new Window(x, y, health, points, level, "");
+						tempTarget = new Window(x, y, health, points, level, "images/window.png");
 					}
 					else if (type.equalsIgnoreCase("Exam"))
 					{
-						tempTarget = new Exam(x, y, health, points, level, "", "Math");
+						tempTarget = new Exam(x, y, health, points, level, "images/exam.png", "Math");
 					}
 					else if (type.equalsIgnoreCase("Bully"))
 					{
-						tempTarget = new Bully(x, y, health, points, level, "", "Bully");
+						tempTarget = new Bully(x, y, health, points, level, "images/bully.png", "Bully");
 					}
 					else 
 					{
@@ -240,12 +252,66 @@ public class GameBoard extends JFrame {
 		//timer.start();  
 	}
 	
+	public void setTargets() {
+		currentTargets.clear();
+		
+		for (Target t : targets)
+		{
+			if (t.getLevel() == this.level)
+			{
+				currentTargets.add(t);
+			}
+		}
+	}
+	
+	public void nextWeapon() {
+		nerd.getWeapons().remove(currentWeapon);
+		if(currentWeapon != null)
+		{
+			this.remove(currentWeapon);
+		}
+		
+		if(nerd.getWeapons().size() == 0)
+		{
+			gameover = true;
+		}
+		else
+		{			
+			currentWeapon = nerd.getWeapon(0);
+			currentWeapon.setBounds(0,0,800,350);
+			this.add(currentWeapon);
+			
+			if (currentWeapon.getLevel() != this.level) {
+				level++;
+				setTargets();
+			}
+		}
+		
+		repaint();
+	}
+	
 	private class TimerListener implements ActionListener {
 
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
 			// TODO Auto-generated method stub
-			currentWeapon.translate(dx, dy, 85, 5, timer); 
+			boolean weaponFinished = false;
+			
+			weaponFinished = currentWeapon.translate(dx, dy, controlPanel.getAngle(), controlPanel.getPower());
+			
+			for (Target t : currentTargets)
+			{				
+				if (t.hit(currentWeapon.x, currentWeapon.y)) {
+					weaponFinished = true;
+					t.damageDone(currentWeapon.damage);
+					break;
+				}
+			}
+			
+			if (weaponFinished) {
+				timer.stop();
+				nextWeapon();
+			}
 		}
 	}
 	
@@ -259,7 +325,14 @@ public class GameBoard extends JFrame {
 		GameBoard gameboard = new GameBoard();
 		gameboard.setVisible(true);
 		gameboard.setDefaultCloseOperation(EXIT_ON_CLOSE);
-		JOptionPane.showMessageDialog(gameboard, message, title, JOptionPane.INFORMATION_MESSAGE);
 		gameboard.startGame();
+		
+		JOptionPane.showMessageDialog(gameboard, message, title, JOptionPane.INFORMATION_MESSAGE);
+	}
+	
+	
+	//The following should only be used for testing purposes and should not be called anywhere during game play
+	public void setNerd(Nerd nerd) {
+		this.nerd = nerd;
 	}
 }
