@@ -70,11 +70,11 @@ public class ControlPanel extends JPanel {
 	
 	//Methods below are for testing purposes only and should not be used during 
 	//implementation of the game
-	public void setAngle(String angle) {
-		this.angleInput.setText(angle);
+	public void setAngle(int angle) {
+		this.angle = angle;
 	}
 	
-	public void setPower(String power) {
-		this.powerInput.setText(power);
+	public void setPower(int power) {
+		this.power = power;
 	}
 }
