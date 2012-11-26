@@ -3,21 +3,24 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Toolkit;
 
+import javax.swing.JPanel;
+import javax.swing.Timer;
 
-public abstract class Weapon {
+
+public abstract class Weapon extends JPanel {
 
 	public enum WEAPON_TYPE {PENCIL, PROTRACTOR, BOOK};
 	
 	protected int damage;
 	protected Image image;
-	protected int x, y, level;
+	protected int x = 10;
+	protected int y = GameBoard.BOARD_HEIGHT - 120; 
+	protected int level;
 	protected WEAPON_TYPE weaponType;
 	
 	public Weapon() {
 		// TODO Auto-generated constructor stub
-		damage = 0;
-		x = 0;
-		y = 0;
+		damage = 0;	
 		level = 0;
 		image = Toolkit.getDefaultToolkit().getImage("/images/none.jpg");
 	}
@@ -27,8 +30,6 @@ public abstract class Weapon {
 		this.level = level;
 		this.weaponType = weaponType;
 		this.image = image;
-		x = 0;
-		y = 0;
 	}
 	
 	public Weapon(int damage, int level, WEAPON_TYPE weaponType, String imagePath) {
@@ -36,8 +37,6 @@ public abstract class Weapon {
 		this.level = level;
 		this.weaponType = weaponType;
 		this.image = Toolkit.getDefaultToolkit().getImage(imagePath);
-		x = 0;
-		y = 0;
 	}
 	
 	public int getDamage() {
@@ -50,6 +49,29 @@ public abstract class Weapon {
 	
 	public WEAPON_TYPE getWeaponType() {
 		return this.weaponType;
+	}
+	
+	public boolean translate(int dx, int dy, int angle, int power) {
+		if (power > 0)
+		{
+			dx = (int)Math.ceil(Math.cos(Math.toRadians(angle))*dx);
+			dy = (int)Math.ceil(Math.sin(Math.toRadians(angle))*dy - ((11/power)*x*0.0098));
+			
+			if ((this.y < 0) || (this.y > GameBoard.BOARD_HEIGHT) ||  (this.x > GameBoard.BOARD_WIDTH) || (this.x < 0))
+			{
+				return true;
+			}
+			this.x += dx;
+			this.y -= dy;
+	
+			// Must include this to see changes
+			repaint();
+		}
+		else
+		{
+			return true;
+		}
+		return false;
 	}
 	
 	public abstract String getWeaponName();

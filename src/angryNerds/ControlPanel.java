@@ -1,5 +1,7 @@
 package angryNerds;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -21,8 +23,9 @@ public class ControlPanel extends JPanel {
 	private JLabel angleLabel, powerLabel;
 	private JButton enterData;
 	private Difficulty difficulty = Difficulty.EASY;
+	private GameBoard gameboard;
 	
-	public ControlPanel() {
+	public ControlPanel(GameBoard gameboard) {
 		// TODO Auto-generated constructor stub
 		angleLabel = new JLabel("Angle: ");
 		angleInput = new JTextArea("0");
@@ -31,6 +34,9 @@ public class ControlPanel extends JPanel {
 		enterData = new JButton("Fire");
 		angle = 0;
 		power = 0;
+		this.gameboard = gameboard;
+		
+		enterData.addActionListener(new FireListener());
 		
 		setLayout(new GridLayout(1, 0));
 		add(angleLabel);
@@ -68,6 +74,14 @@ public class ControlPanel extends JPanel {
 		this.difficulty = difficulty;
 	}
 	
+	public void updateAngle() {
+		this.angle = Integer.parseInt(angleInput.getText());
+	}
+	
+	public void updatePower() {
+		this.power = Integer.parseInt(powerInput.getText());
+	}
+	
 	//Methods below are for testing purposes only and should not be used during 
 	//implementation of the game
 	public void setAngle(int angle) {
@@ -76,5 +90,17 @@ public class ControlPanel extends JPanel {
 	
 	public void setPower(int power) {
 		this.power = power;
+	}
+	
+	private class FireListener implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			// TODO Auto-generated method stub
+			updateAngle();
+			updatePower();
+			gameboard.toss(getAngle(), getPower());
+		}
+		
 	}
 }

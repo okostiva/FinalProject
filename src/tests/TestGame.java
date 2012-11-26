@@ -32,12 +32,12 @@ public class TestGame {
 	@BeforeClass
 	public static void beforeTest () {
 		nerd = new Nerd("NERD", "");
-		book = new Book(50, 1, WEAPON_TYPE.BOOK, "", "MATH");
-		pencil = new Pencil(20, 2, WEAPON_TYPE.PENCIL, "");
-		prot = new Protractor(30, 2, WEAPON_TYPE.PROTRACTOR, "");
-		window = new Window(20, 20, 45, 100, 1, "");
-		bully = new Bully(40, 30, 66, 150, 2, "", "BULLY");
-		exam = new Exam(50, 30, 88, 200, 4, "", "PHYSICS");
+		book = new Book(50, 1, WEAPON_TYPE.BOOK, "images/book.png", "MATH");
+		pencil = new Pencil(20, 1, WEAPON_TYPE.PENCIL, "images/pencil.png");
+		prot = new Protractor(30, 1, WEAPON_TYPE.PROTRACTOR, "images/protractor.png");
+		window = new Window(20, 20, 45, 100, 1, "images/window.png");
+		bully = new Bully(40, 30, 66, 150, 1, "images/bully.png", "BULLY");
+		exam = new Exam(50, 30, 88, 200, 1, "images/exam.png", "PHYSICS");
 	}
 	
 	@Test
@@ -100,7 +100,7 @@ public class TestGame {
 	//This test is for the directional velocity (HARD)
 	@Test
 	public void testVelocityProblems() {
-		ControlPanel controlPanel = new ControlPanel();
+		ControlPanel controlPanel = new ControlPanel(new GameBoard());
 		
 		controlPanel.setAngle(45);
 		controlPanel.setPower(10);
@@ -155,7 +155,7 @@ public class TestGame {
 	//This test is for the angular difference (EASY)
 	@Test
 	public void testAngleDifferenceProblems() {
-		ControlPanel controlPanel = new ControlPanel();
+		ControlPanel controlPanel = new ControlPanel(new GameBoard());
 		
 		controlPanel.setAngle(45);
 		Assert.assertEquals(45.0, controlPanel.getAngleDifference());

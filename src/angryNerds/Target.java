@@ -2,9 +2,13 @@ package angryNerds;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Toolkit;
+import java.io.File;
+
+import javax.imageio.ImageIO;
+import javax.swing.JPanel;
 
 
-public abstract class Target {
+public abstract class Target extends JPanel {
 
 	//Status of true means show the target, status of false means the target has been destroyed
 	protected int x, y, health, points, level;
@@ -27,9 +31,9 @@ public abstract class Target {
 		this.y = y;
 		this.health = health;
 		this.points = points;
+		this.level = level;
 		this.image = image;
 		this.notDestroyed = true;
-		this.level = level;
 	}
 	
 	public Target(int x, int y, int health, int points, int level, String imagePath) {
@@ -37,9 +41,15 @@ public abstract class Target {
 		this.y = y;
 		this.health = health;
 		this.points = points;
+		this.level = level;
 		this.image = Toolkit.getDefaultToolkit().getImage(imagePath);
 		this.notDestroyed = true;
-		this.level = level;
+		
+		try {
+			image = ImageIO.read(new File(imagePath));
+		} catch (Exception ex) {
+			System.out.println("ERROR: Could not find image file " + imagePath);
+		}
 	}
 	
 	public int getHealth() {
@@ -84,6 +94,15 @@ public abstract class Target {
 	
 	public void setY(int y) {
 		this.y = y;
+	}
+	
+	public boolean hit(int x, int y) {
+		if ((this.x <= x) && (this.y <= y) && ((this.y + this.image.getHeight(null)) >= y) && ((this.x + this.image.getWidth(null)) >= x) && this.notDestroyed) 
+		{
+			return true;
+		}
+		
+		return false;
 	}
 	
 	public void damageDone(int damage) {

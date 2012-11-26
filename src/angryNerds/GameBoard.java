@@ -1,5 +1,4 @@
 package angryNerds;
-import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
@@ -12,39 +11,58 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+import javax.swing.Timer;
+
+import angryNerds.Weapon.WEAPON_TYPE;
 
 import angryNerds.Weapon.WEAPON_TYPE;
 
 public class GameBoard extends JFrame {
 
-	public static final String WEAPON_CONFIG = "weapons.csv";
-	public static final String TARGET_CONFIG = "targets.csv";
 	public static final int BOARD_WIDTH = 800;
 	public static final int BOARD_HEIGHT = 400;
+	public static final String WEAPON_CONFIG = "weapons.csv";
+	public static final String TARGET_CONFIG = "targets.csv";
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -4580170113745359348L;
 	private Nerd nerd;
+	private int dx, dy;
 	private int level = 1;
+	private boolean gameover = false;
 	private ControlPanel controlPanel;
-	private ArrayList<Target> targets;
+	private ArrayList<Target> targets, currentTargets;
 	HelpNotes hp = null;
+	private Weapon currentWeapon;
+	private Timer timer;
 
 	public GameBoard() {
 		// TODO Auto-generated constructor stub
 		nerd = new Nerd();
-		controlPanel = new ControlPanel();
+		controlPanel = new ControlPanel(this);
 		targets = new ArrayList<Target>();
+		currentTargets = new ArrayList<Target>();
+		timer = new Timer(1, new TimerListener());
+		
+		this.setLayout(null);
 		
 		setSize(BOARD_WIDTH, BOARD_HEIGHT);
-		this.add(controlPanel, BorderLayout.SOUTH);
+		
+		controlPanel.setBounds(0, 315, 800, 25);
+		this.add(controlPanel);
+		
+		//this.add(controlPanel, BorderLayout.PAGE_END);
 		JMenuBar menu = new JMenuBar();
 		setJMenuBar(menu);
 		menu.add(createFileMenu());
 		
-		loadTargets();
 		loadWeapons();
+		loadTargets();
+		
+		//this.add(currentWeapon, BorderLayout.CENTER);
+		//this.add(targets.get(0), BorderLayout.CENTER);
+		//this.add(targets.get(1), BorderLayout.PAGE_START);
 	}
 	
 	private JMenu createFileMenu() {
@@ -93,6 +111,14 @@ public class GameBoard extends JFrame {
 	
 	public Nerd getNerd() {
 		return nerd;
+	}
+	
+	public void startGame() {				
+		this.updateDrawing(6, 6);
+		this.setTargets();
+		this.nextWeapon();
+		
+		repaint();
 	}
 	
 	public void loadWeapons() {
@@ -217,6 +243,80 @@ public class GameBoard extends JFrame {
 		}
 	}
 	
+	public void toss(int angle, int power) {
+		timer.start();
+	}
+	
+	public void updateDrawing(int dx, int dy) {
+		this.dx = dx;
+		this.dy = dy;
+		timer = new Timer(1, new TimerListener());
+		//timer.start();  
+	}
+	
+	public void setTargets() {
+		currentTargets.clear();
+		
+		for (Target t : targets)
+		{
+			if (t.getLevel() == this.level)
+			{
+				currentTargets.add(t);
+			}
+		}
+	}
+	
+	public void nextWeapon() {
+		nerd.getWeapons().remove(currentWeapon);
+		if(currentWeapon != null)
+		{
+			this.remove(currentWeapon);
+		}
+		
+		if(nerd.getWeapons().size() == 0)
+		{
+			gameover = true;
+		}
+		else
+		{			
+			currentWeapon = nerd.getWeapon(0);
+			currentWeapon.setBounds(0,0,800,350);
+			this.add(currentWeapon);
+			
+			if (currentWeapon.getLevel() != this.level) {
+				level++;
+				setTargets();
+			}
+		}
+		
+		repaint();
+	}
+	
+	private class TimerListener implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			// TODO Auto-generated method stub
+			boolean weaponFinished = false;
+			
+			weaponFinished = currentWeapon.translate(dx, dy, controlPanel.getAngle(), controlPanel.getPower());
+			
+			for (Target t : currentTargets)
+			{				
+				if (t.hit(currentWeapon.x, currentWeapon.y)) {
+					weaponFinished = true;
+					t.damageDone(currentWeapon.damage);
+					break;
+				}
+			}
+			
+			if (weaponFinished) {
+				timer.stop();
+				nextWeapon();
+			}
+		}
+	}
+	
 	/**
 	 * @param args
 	 */
@@ -227,6 +327,14 @@ public class GameBoard extends JFrame {
 		GameBoard gameboard = new GameBoard();
 		gameboard.setVisible(true);
 		gameboard.setDefaultCloseOperation(EXIT_ON_CLOSE);
+		gameboard.startGame();
+		
 		JOptionPane.showMessageDialog(gameboard, message, title, JOptionPane.INFORMATION_MESSAGE);
+	}
+	
+	
+	//The following should only be used for testing purposes and should not be called anywhere during game play
+	public void setNerd(Nerd nerd) {
+		this.nerd = nerd;
 	}
 }
