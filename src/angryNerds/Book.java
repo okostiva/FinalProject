@@ -1,4 +1,5 @@
 package angryNerds;
+import java.awt.Color;
 import java.awt.Graphics;
 
 public class Book extends Weapon {
@@ -20,9 +21,24 @@ public class Book extends Weapon {
 		return this.subject;
 	}
 	
-	@Override
-	public void draw(Graphics g)
+	public void draw(Graphics g) 
 	{
+		if (image == null)
+		{
+			g.setColor(Color.BLUE);
+			g.fillOval(x, y, 20, 20);
+		}
+		else 
+		{
+			g.drawImage(image, x, y, null);
+		}
+		return;
+	}
+	
+	public void paintComponent(Graphics g) 
+	{
+		super.paintComponent(g);
+		draw(g);
 		return;
 	}
 

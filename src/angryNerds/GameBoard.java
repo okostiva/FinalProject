@@ -256,6 +256,13 @@ public class GameBoard extends JFrame {
 	}
 	
 	public void setTargets() {
+		if (currentWeapon != null) {
+			for (Target t: currentTargets) {
+				this.remove(t);
+				repaint();
+			}
+		}
+		
 		currentTargets.clear();
 		
 		for (Target t : targets)
@@ -275,10 +282,11 @@ public class GameBoard extends JFrame {
 	}
 	
 	public void nextWeapon() {
-		nerd.getWeapons().remove(currentWeapon);
 		if(currentWeapon != null)
 		{
 			this.remove(currentWeapon);
+			nerd.removeWeapon(currentWeapon);
+			repaint();
 		}
 		
 		if(nerd.getWeapons().size() == 0)
@@ -290,14 +298,13 @@ public class GameBoard extends JFrame {
 			currentWeapon = nerd.getWeapon(0);
 			currentWeapon.setBounds(0, 0, BOARD_WIDTH, BOARD_HEIGHT-50);
 			this.add(currentWeapon);
+			repaint();
 			
 			if (currentWeapon.getLevel() != this.level) {
 				level++;
 				setTargets();
 			}
 		}
-		
-		repaint();
 	}
 	
 	private class TimerListener implements ActionListener {
@@ -308,6 +315,7 @@ public class GameBoard extends JFrame {
 			boolean weaponFinished = false;
 			
 			weaponFinished = currentWeapon.translate(dx, dy, controlPanel.getAngle(), controlPanel.getPower());
+			repaint();
 			
 			for (Target t : currentTargets)
 			{				

@@ -46,6 +46,11 @@ public class Nerd {
 		return;
 	}
 	
+	public void removeWeapon(Weapon weapon) {
+		weapons.remove(weapon);
+		return;
+	}
+	
 	public ArrayList<Weapon> getWeapons() {
 		return weapons;
 	}

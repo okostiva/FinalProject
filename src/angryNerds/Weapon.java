@@ -65,7 +65,7 @@ public abstract class Weapon extends JPanel {
 			this.y -= dy;
 	
 			// Must include this to see changes
-			repaint();
+			//repaint();
 		}
 		else
 		{
