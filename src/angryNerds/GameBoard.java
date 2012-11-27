@@ -22,10 +22,10 @@ import javax.swing.Timer;
 
 import angryNerds.Weapon.WEAPON_TYPE;
 
-import angryNerds.Weapon.WEAPON_TYPE;
-
 public class GameBoard extends JFrame {
 
+	public enum DIFFICULTY { EASY, HARD };
+	
 	public static final int BOARD_WIDTH = 800;
 	public static final int BOARD_HEIGHT = 600;
 	public static final String WEAPON_CONFIG = "weapons.csv";
@@ -43,6 +43,8 @@ public class GameBoard extends JFrame {
 	HelpNotes hp = null;
 	private Weapon currentWeapon;
 	private Timer timer;
+	private DIFFICULTY difficulty = DIFFICULTY.EASY;
+	private JPanel difficultyPanel = null;
 
 	String angle = "";
 	String x = "";
@@ -144,20 +146,15 @@ public class GameBoard extends JFrame {
 	JFrame diff = new JFrame();
 	private class DifficultyListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) 
-		{
+		{			
 			if (e.getActionCommand().equals("Easy"))
 			{
-				diff.add(createEasyPanel());
-				done.addActionListener(new EasyDoneListener());
+				difficulty = DIFFICULTY.EASY;
 			}
 			else if (e.getActionCommand().equals("Hard"))
 			{
-				diff.add(createHardPanel());
-				done.addActionListener(new HardDoneListener());
+				difficulty = DIFFICULTY.HARD;
 			}
-
-			diff.setSize(500, 150);
-			diff.setVisible(true);
 		}
 	}
 	
@@ -431,6 +428,28 @@ public class GameBoard extends JFrame {
 			if (weaponFinished) {
 				timer.stop();
 				nextWeapon();
+				
+				if (difficultyPanel != null)
+				{
+					diff.remove(difficultyPanel);
+				}
+				
+				switch (difficulty) {
+				case HARD:
+					difficultyPanel = createHardPanel();
+					diff.add(difficultyPanel);
+					done.addActionListener(new HardDoneListener());
+					break;
+				case EASY:
+				default:
+					difficultyPanel = createEasyPanel();
+					diff.add(difficultyPanel);
+					done.addActionListener(new EasyDoneListener());
+					break;
+				}
+				
+				diff.setSize(500, 150);
+				diff.setVisible(true);
 			}
 		}
 	}
