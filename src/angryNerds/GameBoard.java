@@ -1,6 +1,5 @@
 package angryNerds;
 import java.awt.GridLayout;
-import java.awt.Menu;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
@@ -16,7 +15,6 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.Timer;
 
@@ -37,14 +35,17 @@ public class GameBoard extends JFrame {
 	private Nerd nerd;
 	private int dx, dy;
 	private int level = 1;
+	private int score = 0;
+	private int remainingTargets = 0;
 	private boolean gameover = false;
 	private ControlPanel controlPanel;
-	private ArrayList<Target> targets, currentTargets;
+	private ArrayList<Target> targets;
 	HelpNotes hp = null;
 	private Weapon currentWeapon;
 	private Timer timer;
 	private DIFFICULTY difficulty = DIFFICULTY.EASY;
 	private JPanel difficultyPanel = null;
+	private JLabel pointLabel = new JLabel("Score: " + Integer.toString((score)));
 
 	String angle = "";
 	String x = "";
@@ -55,7 +56,6 @@ public class GameBoard extends JFrame {
 		nerd = new Nerd();
 		controlPanel = new ControlPanel(this);
 		targets = new ArrayList<Target>();
-		currentTargets = new ArrayList<Target>();
 		timer = new Timer(1, new TimerListener());
 
 		this.setLayout(null);
@@ -68,10 +68,17 @@ public class GameBoard extends JFrame {
 
 		//this.add(controlPanel, BorderLayout.PAGE_END);
 		JMenuBar menu = new JMenuBar();
+		GridLayout layout = new GridLayout(1,8);
+		menu.setLayout(layout);
 		setJMenuBar(menu);
 		menu.add(createFileMenu());
 		menu.add(createDifficultyMenu());
-
+		menu.add(new JLabel());
+		menu.add(new JLabel());
+		menu.add(new JLabel());
+		menu.add(new JLabel());
+		menu.add(pointLabel);
+		
 		loadWeapons();
 		loadTargets();
 
@@ -213,7 +220,15 @@ public class GameBoard extends JFrame {
 		return nerd;
 	}
 
-	public void startGame() {				
+	public void startGame() {	
+		for (Target t : targets)
+		{
+			t.setBounds(0, 0, BOARD_WIDTH, BOARD_HEIGHT-50);
+			t.setVisible(false);
+			this.add(t);
+			repaint();
+		}		
+		
 		this.updateDrawing(3,3);
 		this.setTargets();
 		this.nextWeapon();
@@ -355,29 +370,35 @@ public class GameBoard extends JFrame {
 	}
 
 	public void setTargets() {
-		if (currentWeapon != null) {
-			for (Target t: currentTargets) {
-				this.remove(t);
-				repaint();
-			}
-		}
+		//if (currentTargets != null) {
+		//	for (Target t: currentTargets) {
+		//		this.remove(t);
+		//		repaint();
+		//	}
+		//}
 
-		currentTargets.clear();
+		//currentTargets.clear();
 
 		for (Target t : targets)
 		{
 			if (t.getLevel() == this.level)
 			{
-				currentTargets.add(t);
+				t.setVisible(true);
+				remainingTargets++;
+				//currentTargets.add(t);
+			}
+			else 
+			{
+				t.setVisible(false);
 			}
 		}
 
-		for (Target t : currentTargets)
-		{
-			t.setBounds(0, 0, BOARD_WIDTH, BOARD_HEIGHT-50);
-			this.add(t);
-			repaint();
-		}
+//		for (Target t : currentTargets)
+//		{
+//			t.setBounds(0, 0, BOARD_WIDTH, BOARD_HEIGHT-50);
+//			this.add(t);
+//			repaint();
+//		}
 	}
 
 	public void nextWeapon() {
@@ -385,12 +406,14 @@ public class GameBoard extends JFrame {
 		{
 			this.remove(currentWeapon);
 			nerd.removeWeapon(currentWeapon);
-			repaint();
 		}
 
 		if(nerd.getWeapons().size() == 0)
 		{
-			gameover = true;
+			String title = "Game Over";
+			String message = "Congratulations, you scored " + score + " points!";
+			JOptionPane.showMessageDialog(this, message, title, JOptionPane.INFORMATION_MESSAGE);
+			System.exit(0);
 		}
 		else
 		{			
@@ -401,11 +424,26 @@ public class GameBoard extends JFrame {
 
 			if (currentWeapon.getLevel() != this.level) {
 				level++;
+				remainingTargets = 0;
 				setTargets();
+				repaint();
 			}
 		}
 	}
 
+	public void nextLevel() {
+		int tempLevel = level;
+		
+		while(currentWeapon.getLevel() == tempLevel) {
+			nextWeapon();
+		}
+	}
+	
+	public void updateScore(int points) {
+		score += points;
+		pointLabel.setText("Score: " + Integer.toString(score));
+	}
+	
 	private class TimerListener implements ActionListener {
 
 		@Override
@@ -416,18 +454,34 @@ public class GameBoard extends JFrame {
 			weaponFinished = currentWeapon.translate(dx, dy, controlPanel.getAngle(), controlPanel.getPower());
 			repaint();
 
-			for (Target t : currentTargets)
+			for (Target t : targets)
 			{				
-				if (t.hit(currentWeapon.x, currentWeapon.y)) {
-					weaponFinished = true;
-					t.damageDone(currentWeapon.damage);
-					break;
+				if (t.level == level)
+				{
+					if (t.hit(currentWeapon.x, currentWeapon.y)) {
+						weaponFinished = true;
+						t.damageDone(currentWeapon.damage);
+						
+						if (!t.notDestroyed) {
+							t.setVisible(false);
+							updateScore(t.getPoints());
+							remainingTargets--;							
+							repaint();
+						}
+						
+						break;
+					}
 				}
 			}
 
 			if (weaponFinished) {
 				timer.stop();
 				nextWeapon();
+				
+				if (remainingTargets == 0)
+				{
+					nextLevel();
+				}
 				
 				if (difficultyPanel != null)
 				{

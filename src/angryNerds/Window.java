@@ -28,6 +28,7 @@ public class Window extends Target {
 	
 	public void paintComponent(Graphics g)
 	{
+		//super.paintComponent(g);
 		this.draw(g);
 		return;
 	}

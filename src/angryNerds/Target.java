@@ -97,7 +97,7 @@ public abstract class Target extends JPanel {
 	}
 	
 	public boolean hit(int x, int y) {
-		if ((this.x <= x) && (this.y <= y) && ((this.y + this.image.getHeight(null)) >= y) && ((this.x + this.image.getWidth(null)) >= x) && this.notDestroyed) 
+		if ((this.x * 2 <= x) && (this.y * 2 <= y) && ((this.y * 2 + this.image.getHeight(null)) >= y) && ((this.x * 2 + this.image.getWidth(null)) >= x) && this.notDestroyed) 
 		{
 			return true;
 		}
