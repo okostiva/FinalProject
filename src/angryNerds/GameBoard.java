@@ -138,6 +138,7 @@ public class GameBoard extends JFrame {
 		{
 			angle = angleField.getText();
 			diff.setVisible(false);
+			repaint();
 		}
 	}
 	
@@ -147,6 +148,7 @@ public class GameBoard extends JFrame {
 			x = xField.getText();
 			y = yField.getText();
 			diff.setVisible(false);
+			repaint();
 		}
 	}
 	
