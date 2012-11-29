@@ -45,6 +45,7 @@ public class GameBoard extends JFrame {
 	private DIFFICULTY difficulty = DIFFICULTY.EASY;
 	private JPanel difficultyPanel = null;
 	private JLabel pointLabel = new JLabel("Score: " + Integer.toString((score)));
+	private JLabel levelLabel = new JLabel("Level: " + level);
 
 	String angle = "";
 	String x = "";
@@ -75,7 +76,7 @@ public class GameBoard extends JFrame {
 		menu.add(new JLabel());
 		menu.add(new JLabel());
 		menu.add(new JLabel());
-		menu.add(new JLabel());
+		menu.add(levelLabel);
 		menu.add(pointLabel);
 		
 		loadWeapons();
@@ -151,7 +152,7 @@ public class GameBoard extends JFrame {
 		}
 	}
 	
-	JFrame diff = new JFrame();
+	JOptionPane diff = new JOptionPane();
 	private class DifficultyListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) 
 		{			
@@ -425,6 +426,7 @@ public class GameBoard extends JFrame {
 
 			if (currentWeapon.getLevel() != this.level) {
 				level++;
+				updateLevel();
 				remainingTargets = 0;
 				setTargets();
 				repaint();
@@ -443,6 +445,10 @@ public class GameBoard extends JFrame {
 	public void updateScore(int points) {
 		score += points;
 		pointLabel.setText("Score: " + Integer.toString(score));
+	}
+	
+	public void updateLevel() {
+		levelLabel.setText("Level: " + level);
 	}
 	
 	private class TimerListener implements ActionListener {

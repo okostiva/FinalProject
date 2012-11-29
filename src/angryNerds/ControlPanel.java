@@ -28,9 +28,9 @@ public class ControlPanel extends JPanel {
 	
 	public ControlPanel(GameBoard gameboard) {
 		// TODO Auto-generated constructor stub
-		angleLabel = new JLabel("Angle: ");
+		angleLabel = new JLabel("Angle in Degrees (1-89): ");
 		angleInput = new JTextArea("0");
-		powerLabel = new JLabel("Power: ");
+		powerLabel = new JLabel("Power (1-10): ");
 		powerInput = new JTextArea("0");
 		enterData = new JButton("Fire");
 		angle = 0;
@@ -77,7 +77,7 @@ public class ControlPanel extends JPanel {
 	
 	public boolean updateAngle() {
 		try {
-			this.angle = Integer.parseInt(angleInput.getText());
+			this.angle = Integer.parseInt(angleInput.getText().trim());
 		
 			if (this.angle > 89 || this.angle < 1)
 			{
@@ -94,9 +94,9 @@ public class ControlPanel extends JPanel {
 	
 	public boolean updatePower() {
 		try {
-			this.power = Integer.parseInt(powerInput.getText());
+			this.power = Integer.parseInt(powerInput.getText().trim());
 		
-			if (this.power < 0 || this.power > 10)
+			if (this.power < 1 || this.power > 10)
 			{
 				throw new Exception ("Invalid power detected");
 			}
