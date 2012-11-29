@@ -1,4 +1,5 @@
 package angryNerds;
+import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -7,15 +8,12 @@ import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
 import javax.swing.Timer;
 
 import angryNerds.Weapon.WEAPON_TYPE;
@@ -28,6 +26,13 @@ public class GameBoard extends JFrame {
 	public static final int BOARD_HEIGHT = 600;
 	public static final String WEAPON_CONFIG = "weapons.csv";
 	public static final String TARGET_CONFIG = "targets.csv";
+	public static final String BOOK_IMAGE = "images/book.png";
+	public static final String PENCIL_IMAGE = "images/pencil.png";
+	public static final String PROTRACTOR_IMAGE = "images/protractor.png";
+	public static final String BULLY_IMAGE = "images/bully.png";
+	public static final String WINDOW_IMAGE = "images/window.png";
+	public static final String EXAM_IMAGE = "images/exam.png";
+	
 	/**
 	 * 
 	 */
@@ -43,13 +48,9 @@ public class GameBoard extends JFrame {
 	private Weapon currentWeapon;
 	private Timer timer;
 	private DIFFICULTY difficulty = DIFFICULTY.EASY;
-	private JPanel difficultyPanel = null;
+	private MathDialog difficultyDialog = new MathDialog();
 	private JLabel pointLabel = new JLabel("Score: " + Integer.toString((score)));
 	private JLabel levelLabel = new JLabel("Level: " + level);
-
-	String angle = "";
-	String x = "";
-	String y = "";
 
 	public GameBoard() {
 		// TODO Auto-generated constructor stub
@@ -132,83 +133,6 @@ public class GameBoard extends JFrame {
 			hp.setVisible(true);
 		}
 	}
-	
-	private class EasyDoneListener implements ActionListener {
-		public void actionPerformed(ActionEvent e) 
-		{
-			angle = angleField.getText();
-			diff.setVisible(false);
-			repaint();
-		}
-	}
-	
-	private class HardDoneListener implements ActionListener {
-		public void actionPerformed(ActionEvent e) 
-		{
-			x = xField.getText();
-			y = yField.getText();
-			diff.setVisible(false);
-			repaint();
-		}
-	}
-	
-	JOptionPane diff = new JOptionPane();
-	private class DifficultyListener implements ActionListener {
-		public void actionPerformed(ActionEvent e) 
-		{			
-			if (e.getActionCommand().equals("Easy"))
-			{
-				difficulty = DIFFICULTY.EASY;
-			}
-			else if (e.getActionCommand().equals("Hard"))
-			{
-				difficulty = DIFFICULTY.HARD;
-			}
-		}
-	}
-	
-	JPanel panel;
-	JButton done;
-	/// EASY MODE...
-	JLabel angleLabel;
-	JTextField angleField;
-
-	private JPanel createEasyPanel() {
-		panel = new JPanel();
-		angleLabel = new JLabel("Enter an Angle: ");
-		angleField = new JTextField(3);
-		done = new JButton("DONE");
-
-		panel.add(angleLabel);
-		panel.add(angleField);
-		panel.add(done);
-
-		return panel;
-	}
-	
-	/// HARD MODE...
-	JLabel xLabel;
-	JLabel yLabel;
-	JTextField xField;
-	JTextField yField;
-	private JPanel createHardPanel() {
-		panel = new JPanel();
-		xLabel = new JLabel("Enter X: ");
-		yLabel = new JLabel("Enter Y: ");
-		xField = new JTextField(3);
-		yField = new JTextField(3);
-		done = new JButton("DONE");
-		
-		panel.setLayout(new GridLayout(2,3));
-		panel.add(xLabel);
-		panel.add(yLabel);
-		panel.add(done);
-		panel.add(xField);
-		panel.add(yField);
-		
-
-		return panel;
-	}
 
 	public Target getTarget(int index) {
 		return targets.get(index);
@@ -237,129 +161,7 @@ public class GameBoard extends JFrame {
 
 		repaint();
 	}
-
-	public void loadWeapons() {
-		try {
-			FileReader rdr = new FileReader(WEAPON_CONFIG);
-			Scanner scn = new Scanner(rdr);
-			String line, type;
-			String [] inputs;
-			int level, damage, quantity;
-
-			while (scn.hasNext())
-			{
-				line = scn.nextLine();
-				inputs = line.split(",");
-
-				if (inputs.length == 4) 
-				{
-					level = Integer.parseInt(inputs[0]);
-					type = inputs[1];
-					damage = Integer.parseInt(inputs[2]);
-					quantity = Integer.parseInt(inputs[3]);
-
-					for (int i = 0; i<quantity; i++)
-					{
-						Weapon tempWeapon;
-
-						if (type.equalsIgnoreCase("Pencil"))
-						{
-							tempWeapon = new Pencil(damage, level, WEAPON_TYPE.PENCIL, "images/pencil.png");
-						}
-						else if (type.equalsIgnoreCase("Protractor"))
-						{
-							tempWeapon = new Protractor(damage, level, WEAPON_TYPE.PROTRACTOR, "images/protractor.png");
-						}
-						else if (type.equalsIgnoreCase("Book"))
-						{
-							tempWeapon = new Book(damage, level, WEAPON_TYPE.BOOK, "images/book.png", "MATH");
-						}
-						else 
-						{
-							throw new Exception("ERROR: Invalid weapon type (" + type + ") detected in the weapon config file " + WEAPON_CONFIG);
-						}
-
-						nerd.AddWeapon(tempWeapon);
-					}
-				}
-				else 
-				{
-					throw new Exception("ERROR: Invalid weapon config detected in the weapon config file " + WEAPON_CONFIG);
-				}
-			}
-		}
-		catch (FileNotFoundException ex) {
-			System.out.println("ERROR: Could not open weapon config file " + WEAPON_CONFIG);
-			System.exit(0);
-		}
-		catch (NumberFormatException ex) {
-			System.out.println("ERROR: Non-numeric value detected in the weapon config file " + WEAPON_CONFIG);
-			System.exit(0);
-		}
-		catch (Exception ex) {
-			System.out.println(ex.toString());
-			System.exit(0);
-		}
-	}
-
-	public void loadTargets() {
-		try {
-			FileReader rdr = new FileReader(TARGET_CONFIG);
-			Scanner scn = new Scanner(rdr);
-			String line, type;
-			String [] inputs;
-			int x, y, level, health, points;
-
-			while (scn.hasNext())
-			{
-				Target tempTarget;
-				line = scn.nextLine();
-				inputs = line.split(",");
-
-				if (inputs.length == 6) 
-				{
-					level = Integer.parseInt(inputs[0]);
-					type = inputs[1];
-					x = Integer.parseInt(inputs[2]);
-					y = Integer.parseInt(inputs[3]);
-					health = Integer.parseInt(inputs[4]);
-					points = Integer.parseInt(inputs[5]);
-
-					if (type.equalsIgnoreCase("Window"))
-					{
-						tempTarget = new Window(x, y, health, points, level, "images/window.png");
-					}
-					else if (type.equalsIgnoreCase("Exam"))
-					{
-						tempTarget = new Exam(x, y, health, points, level, "images/exam.png", "Math");
-					}
-					else if (type.equalsIgnoreCase("Bully"))
-					{
-						tempTarget = new Bully(x, y, health, points, level, "images/bully.png", "Bully");
-					}
-					else 
-					{
-						throw new Exception("ERROR: Invalid target type (" + type + ") detected in the target config file " + TARGET_CONFIG);
-					}
-
-					targets.add(tempTarget);
-				}
-			}
-		}
-		catch (FileNotFoundException ex) {
-			System.out.println("ERROR: Could not open target config file " + TARGET_CONFIG);
-			System.exit(0);
-		}
-		catch (NumberFormatException ex) {
-			System.out.println("ERROR: Non-numeric value detected in the target config file " + TARGET_CONFIG);
-			System.exit(0);
-		}
-		catch (Exception ex) {
-			System.out.println(ex.toString());
-			System.exit(0);
-		}
-	}
-
+	
 	public void toss(int angle, int power) {
 		timer.start();
 	}
@@ -444,6 +246,11 @@ public class GameBoard extends JFrame {
 	
 	public void updateScore(int points) {
 		score += points;
+		
+		if (points < 0)	pointLabel.setForeground(Color.RED);
+		else if (points == 0) pointLabel.setForeground(Color.BLACK);
+		else pointLabel.setForeground(Color.BLUE);
+		
 		pointLabel.setText("Score: " + Integer.toString(score));
 	}
 	
@@ -451,6 +258,143 @@ public class GameBoard extends JFrame {
 		levelLabel.setText("Level: " + level);
 	}
 	
+
+	public void loadWeapons() {
+		try {
+			FileReader rdr = new FileReader(WEAPON_CONFIG);
+			Scanner scn = new Scanner(rdr);
+			String line, type;
+			String [] inputs;
+			int level, damage, quantity;
+
+			while (scn.hasNext())
+			{
+				line = scn.nextLine();
+				inputs = line.split(",");
+
+				if (inputs.length == 4) 
+				{
+					level = Integer.parseInt(inputs[0]);
+					type = inputs[1];
+					damage = Integer.parseInt(inputs[2]);
+					quantity = Integer.parseInt(inputs[3]);
+
+					for (int i = 0; i<quantity; i++)
+					{
+						Weapon tempWeapon;
+
+						if (type.equalsIgnoreCase("Pencil"))
+						{
+							tempWeapon = new Pencil(damage, level, WEAPON_TYPE.PENCIL, PENCIL_IMAGE);
+						}
+						else if (type.equalsIgnoreCase("Protractor"))
+						{
+							tempWeapon = new Protractor(damage, level, WEAPON_TYPE.PROTRACTOR, PROTRACTOR_IMAGE);
+						}
+						else if (type.equalsIgnoreCase("Book"))
+						{
+							tempWeapon = new Book(damage, level, WEAPON_TYPE.BOOK, BOOK_IMAGE, "MATH");
+						}
+						else 
+						{
+							throw new Exception("ERROR: Invalid weapon type (" + type + ") detected in the weapon config file " + WEAPON_CONFIG);
+						}
+
+						nerd.AddWeapon(tempWeapon);
+					}
+				}
+				else 
+				{
+					throw new Exception("ERROR: Invalid weapon config detected in the weapon config file " + WEAPON_CONFIG);
+				}
+			}
+		}
+		catch (FileNotFoundException ex) {
+			System.out.println("ERROR: Could not open weapon config file " + WEAPON_CONFIG);
+			System.exit(0);
+		}
+		catch (NumberFormatException ex) {
+			System.out.println("ERROR: Non-numeric value detected in the weapon config file " + WEAPON_CONFIG);
+			System.exit(0);
+		}
+		catch (Exception ex) {
+			System.out.println(ex.toString());
+			System.exit(0);
+		}
+	}
+
+	public void loadTargets() {
+		try {
+			FileReader rdr = new FileReader(TARGET_CONFIG);
+			Scanner scn = new Scanner(rdr);
+			String line, type;
+			String [] inputs;
+			int x, y, level, health, points;
+
+			while (scn.hasNext())
+			{
+				Target tempTarget;
+				line = scn.nextLine();
+				inputs = line.split(",");
+
+				if (inputs.length == 6) 
+				{
+					level = Integer.parseInt(inputs[0]);
+					type = inputs[1];
+					x = Integer.parseInt(inputs[2]);
+					y = Integer.parseInt(inputs[3]);
+					health = Integer.parseInt(inputs[4]);
+					points = Integer.parseInt(inputs[5]);
+
+					if (type.equalsIgnoreCase("Window"))
+					{
+						tempTarget = new Window(x, y, health, points, level, WINDOW_IMAGE);
+					}
+					else if (type.equalsIgnoreCase("Exam"))
+					{
+						tempTarget = new Exam(x, y, health, points, level, EXAM_IMAGE, "Math");
+					}
+					else if (type.equalsIgnoreCase("Bully"))
+					{
+						tempTarget = new Bully(x, y, health, points, level, BULLY_IMAGE, "Bully");
+					}
+					else 
+					{
+						throw new Exception("ERROR: Invalid target type (" + type + ") detected in the target config file " + TARGET_CONFIG);
+					}
+
+					targets.add(tempTarget);
+				}
+			}
+		}
+		catch (FileNotFoundException ex) {
+			System.out.println("ERROR: Could not open target config file " + TARGET_CONFIG);
+			System.exit(0);
+		}
+		catch (NumberFormatException ex) {
+			System.out.println("ERROR: Non-numeric value detected in the target config file " + TARGET_CONFIG);
+			System.exit(0);
+		}
+		catch (Exception ex) {
+			System.out.println(ex.toString());
+			System.exit(0);
+		}
+	}
+	
+	private class DifficultyListener implements ActionListener {
+		public void actionPerformed(ActionEvent e) 
+		{			
+			if (e.getActionCommand().equals("Easy"))
+			{
+				difficulty = DIFFICULTY.EASY;
+			}
+			else if (e.getActionCommand().equals("Hard"))
+			{
+				difficulty = DIFFICULTY.HARD;
+			}
+		}
+	}
+
 	private class TimerListener implements ActionListener {
 
 		@Override
@@ -490,27 +434,23 @@ public class GameBoard extends JFrame {
 					nextLevel();
 				}
 				
-				if (difficultyPanel != null)
+				if (difficultyDialog != null)
 				{
-					diff.remove(difficultyPanel);
+					difficultyDialog.removeCurrentPanel();
 				}
 				
 				switch (difficulty) {
 				case HARD:
-					difficultyPanel = createHardPanel();
-					diff.add(difficultyPanel);
-					done.addActionListener(new HardDoneListener());
+					difficultyDialog.createHardPanel();
 					break;
 				case EASY:
 				default:
-					difficultyPanel = createEasyPanel();
-					diff.add(difficultyPanel);
-					done.addActionListener(new EasyDoneListener());
+					difficultyDialog.createEasyPanel();
 					break;
 				}
 				
-				diff.setSize(500, 150);
-				diff.setVisible(true);
+				difficultyDialog.setSize(500, 150);
+				difficultyDialog.setVisible(true);
 			}
 		}
 	}
@@ -528,6 +468,7 @@ public class GameBoard extends JFrame {
 		gameboard.startGame();
 
 		JOptionPane.showMessageDialog(gameboard, message, title, JOptionPane.INFORMATION_MESSAGE);
+		
 	}
 
 
