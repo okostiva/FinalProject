@@ -1,4 +1,5 @@
 package angryNerds;
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
 
@@ -31,6 +32,12 @@ public class Exam extends Target {
 	public void draw(Graphics g)
 	{
 		g.drawImage(image, x, y, null);
+		
+		g.setColor(Color.RED);
+		g.fillRect(this.x + 2, this.y + 5 + image.getHeight(null), health, 5);
+		
+		g.setColor(Color.BLACK);
+		g.drawRect(this.x + 2, this.y + 5 + image.getHeight(null), points, 5);
 		
 		return;
 	}

@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
@@ -74,12 +75,38 @@ public class ControlPanel extends JPanel {
 		this.difficulty = difficulty;
 	}
 	
-	public void updateAngle() {
-		this.angle = Integer.parseInt(angleInput.getText());
+	public boolean updateAngle() {
+		try {
+			this.angle = Integer.parseInt(angleInput.getText());
+		
+			if (this.angle > 89 || this.angle < 1)
+			{
+				throw new Exception ("Invalid angle detected");
+			}
+			
+			return true;
+		
+		} catch (Exception ex) {
+			JOptionPane.showMessageDialog(gameboard, "Please enter a valid angle from 1-89.", "Invalid Angle", JOptionPane.ERROR_MESSAGE);
+			return false;
+		}
 	}
 	
-	public void updatePower() {
-		this.power = Integer.parseInt(powerInput.getText());
+	public boolean updatePower() {
+		try {
+			this.power = Integer.parseInt(powerInput.getText());
+		
+			if (this.power < 0 || this.power > 10)
+			{
+				throw new Exception ("Invalid power detected");
+			}
+			
+			return true;
+		
+		} catch (Exception ex) {
+			JOptionPane.showMessageDialog(gameboard, "Please enter a valid power from 1-10.", "Invalid Power", JOptionPane.ERROR_MESSAGE);
+			return false;
+		}
 	}
 	
 	//Methods below are for testing purposes only and should not be used during 
@@ -97,9 +124,10 @@ public class ControlPanel extends JPanel {
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
 			// TODO Auto-generated method stub
-			updateAngle();
-			updatePower();
-			gameboard.toss(getAngle(), getPower());
+			if (updateAngle() && updatePower())
+			{
+				gameboard.toss(getAngle(), getPower());
+			}
 		}
 		
 	}

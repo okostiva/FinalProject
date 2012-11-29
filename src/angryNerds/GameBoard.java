@@ -37,7 +37,6 @@ public class GameBoard extends JFrame {
 	private int level = 1;
 	private int score = 0;
 	private int remainingTargets = 0;
-	private boolean gameover = false;
 	private ControlPanel controlPanel;
 	private ArrayList<Target> targets;
 	HelpNotes hp = null;
