@@ -2,6 +2,7 @@ package angryNerds;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.DecimalFormat;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -60,11 +61,13 @@ public class ControlPanel extends JPanel {
 	}
 	
 	public double getVelocityX() {
-		return Math.cos(Math.toRadians(this.angle))*this.power;
+		DecimalFormat df = new DecimalFormat("#.00");
+		return Double.valueOf(df.format(Math.cos(Math.toRadians(this.angle))*this.power));
 	}
 	
 	public double getVelocityY() {
-		return Math.sin(Math.toRadians(this.angle))*this.power;
+		DecimalFormat df = new DecimalFormat("#.00");
+		return Double.valueOf(df.format(Math.sin(Math.toRadians(this.angle))*this.power));
 	}
 	
 	public double getAngleDifference() {

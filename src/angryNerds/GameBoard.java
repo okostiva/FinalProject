@@ -461,7 +461,7 @@ public class GameBoard extends JFrame {
 		}
 	}
 	
-	public class MathDialog extends JDialog {
+	class MathDialog extends JDialog {
 
 		private JPanel panel = null;
 		private JButton done;
@@ -480,7 +480,7 @@ public class GameBoard extends JFrame {
 			this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 		}
 		
-		public class EasyDoneListener implements ActionListener {
+		class EasyDoneListener implements ActionListener {
 			public void actionPerformed(ActionEvent e) 
 			{
 				repaint();
@@ -490,8 +490,10 @@ public class GameBoard extends JFrame {
 						if (Integer.parseInt(angleField.getText()) == controlPanel.getAngleDifference()) {
 							JOptionPane.showMessageDialog(panel, "Correct!");
 							//must update the score!
+							updateScore(20);
 						} else {
 							JOptionPane.showMessageDialog(panel, "Incorrect!");
+							updateScore(-10);
 						}
 						incorrect = false;
 						setVisible(false);
@@ -505,19 +507,20 @@ public class GameBoard extends JFrame {
 			}
 		}
 		
-		public class HardDoneListener implements ActionListener {
+		class HardDoneListener implements ActionListener {
 			public void actionPerformed(ActionEvent e) 
 			{
 				repaint();
 				boolean incorrect = true;
 				while(incorrect) {
 					try {
-						if ((Integer.parseInt(xField.getText()) == controlPanel.getVelocityX()) && (Integer.parseInt(yField.getText()) == controlPanel.getVelocityY())) {
+						if ((Double.parseDouble(xField.getText()) == controlPanel.getVelocityX()) && (Double.parseDouble(yField.getText()) == controlPanel.getVelocityY())) {
 							JOptionPane.showMessageDialog(panel, "Correct!");
-							
+							updateScore(20);
 						} else {
 							JOptionPane.showMessageDialog(panel, "Incorrect!");
-							System.out.println(this.getClass());
+							updateScore(-10);
+							System.out.println(controlPanel.getVelocityX() + " " + controlPanel.getVelocityY());
 						}
 						incorrect = false;
 						setVisible(false);
