@@ -8,12 +8,16 @@ import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
 import javax.swing.Timer;
 
 import angryNerds.Weapon.WEAPON_TYPE;
@@ -42,13 +46,13 @@ public class GameBoard extends JFrame {
 	private int level = 1;
 	private int score = 0;
 	private int remainingTargets = 0;
-	private ControlPanel controlPanel;
+	public ControlPanel controlPanel;
 	private ArrayList<Target> targets;
 	HelpNotes hp = null;
 	private Weapon currentWeapon;
 	private Timer timer;
 	private DIFFICULTY difficulty = DIFFICULTY.EASY;
-	private MathDialog difficultyDialog = new MathDialog();
+	private MathDialog difficultyDialog; //new MathDialog();
 	private JLabel pointLabel = new JLabel("Score: " + Integer.toString((score)));
 	private JLabel levelLabel = new JLabel("Level: " + level);
 
@@ -58,6 +62,8 @@ public class GameBoard extends JFrame {
 		controlPanel = new ControlPanel(this);
 		targets = new ArrayList<Target>();
 		timer = new Timer(1, new TimerListener());
+		
+		difficultyDialog = new MathDialog();
 
 		this.setLayout(null);
 
@@ -249,7 +255,7 @@ public class GameBoard extends JFrame {
 		
 		if (points < 0)	pointLabel.setForeground(Color.RED);
 		else if (points == 0) pointLabel.setForeground(Color.BLACK);
-		else pointLabel.setForeground(Color.BLUE);
+		else pointLabel.setForeground(Color.GREEN);
 		
 		pointLabel.setText("Score: " + Integer.toString(score));
 	}
@@ -449,8 +455,128 @@ public class GameBoard extends JFrame {
 					break;
 				}
 				
-				difficultyDialog.setSize(500, 150);
+				difficultyDialog.setSize(700, 150);
 				difficultyDialog.setVisible(true);
+			}
+		}
+	}
+	
+	public class MathDialog extends JDialog {
+
+		private JPanel panel = null;
+		private JButton done;
+		/// EASY MODE...
+		private JLabel angleLabel;
+		private JTextField angleField;
+		/// HARD MODE...
+		private JLabel xLabel;
+		private JLabel yLabel;
+		private JTextField xField;
+		private JTextField yField;
+		
+		public MathDialog() {
+			// TODO Auto-generated constructor stub
+			this.setModal(true);
+			this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+		}
+		
+		public class EasyDoneListener implements ActionListener {
+			public void actionPerformed(ActionEvent e) 
+			{
+				repaint();
+				boolean incorrect = true;
+				while(incorrect) {
+					try {
+						if (Integer.parseInt(angleField.getText()) == controlPanel.getAngleDifference()) {
+							JOptionPane.showMessageDialog(panel, "Correct!");
+							//must update the score!
+						} else {
+							JOptionPane.showMessageDialog(panel, "Incorrect!");
+						}
+						incorrect = false;
+						setVisible(false);
+					} catch (NumberFormatException nfe) {
+						JOptionPane.showMessageDialog(angleField, "Invalid input, please enter a number");
+						incorrect = false;
+						
+					}
+				}
+				
+			}
+		}
+		
+		public class HardDoneListener implements ActionListener {
+			public void actionPerformed(ActionEvent e) 
+			{
+				repaint();
+				boolean incorrect = true;
+				while(incorrect) {
+					try {
+						if ((Integer.parseInt(xField.getText()) == controlPanel.getVelocityX()) && (Integer.parseInt(yField.getText()) == controlPanel.getVelocityY())) {
+							JOptionPane.showMessageDialog(panel, "Correct!");
+							
+						} else {
+							JOptionPane.showMessageDialog(panel, "Incorrect!");
+							System.out.println(this.getClass());
+						}
+						incorrect = false;
+						setVisible(false);
+					} catch (NumberFormatException nfe) {
+						JOptionPane.showMessageDialog(angleField, "Invalid input, please enter a number");
+						incorrect = false;
+					}
+				}
+			}
+		}
+
+		private JPanel addEasyPanel() {
+			panel = new JPanel();
+			angleLabel = new JLabel("What is the difference between 90 degrees and the angle you entered?");
+			angleField = new JTextField(3);
+			done = new JButton("DONE");
+
+			panel.add(angleLabel);
+			panel.add(angleField);
+			panel.add(done);
+
+			done.addActionListener(new EasyDoneListener());
+			
+			return panel;
+		}
+		
+		private JPanel addHardPanel() {
+			panel = new JPanel();
+			xLabel = new JLabel("Enter velocity in the x-direction: ");
+			yLabel = new JLabel("Enter velocity in the y-direction: ");
+			xField = new JTextField(3);
+			yField = new JTextField(3);
+			done = new JButton("DONE");
+			
+			panel.setLayout(new GridLayout(2,3));
+			panel.add(xLabel);
+			panel.add(yLabel);
+			panel.add(done);
+			panel.add(xField);
+			panel.add(yField);
+			
+			done.addActionListener(new HardDoneListener());
+			
+			return panel;
+		}
+		
+		public void createHardPanel() {
+			this.add(addHardPanel());
+		}
+		
+		public void createEasyPanel() {
+			this.add(addEasyPanel());
+		}
+		
+		public void removeCurrentPanel() 
+		{
+			if (this.panel != null)
+			{
+				this.remove(this.panel);
 			}
 		}
 	}
