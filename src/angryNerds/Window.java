@@ -6,17 +6,22 @@ import java.awt.Image;
 
 public class Window extends Target {
 	
+	private String name;
+	
 	public Window() {
 		// TODO Auto-generated constructor stub
 		super();
+		this.name = "??";
 	}
 	
-	public Window(int x, int y, int health, int points, int level, String imgPath) {
+	public Window(int x, int y, int health, int points, int level, String imgPath, String name) {
 		super(x, y, health, points, level, imgPath);
+		this.name = name;
 	}
 	
-	public Window(int x, int y, int health, int points, int level, Image image) {
+	public Window(int x, int y, int health, int points, int level, Image image, String name) {
 		super(x, y, health, points, level, image);
+		this.name = name;
 	}
 	
 	@Override
@@ -38,6 +43,10 @@ public class Window extends Target {
 		//super.paintComponent(g);
 		this.draw(g);
 		return;
+	}
+	
+	public String getName() {
+		return this.name;
 	}
 
 }

@@ -72,6 +72,7 @@ public class GameBoard extends JFrame {
 		controlPanel.setBounds(0, BOARD_HEIGHT-85, BOARD_WIDTH, 25);
 		controlPanel.setOpaque(true);
 		this.add(controlPanel);
+		setTitle("Angry Nerds >:-|");
 
 		//this.add(controlPanel, BorderLayout.PAGE_END);
 		JMenuBar menu = new JMenuBar();
@@ -134,7 +135,7 @@ public class GameBoard extends JFrame {
 		public void actionPerformed(ActionEvent e) 
 		{
 			if (hp == null) {
-				hp = new HelpNotes(nerd);
+				hp = new HelpNotes(nerd, getTargets());
 			}
 			hp.setVisible(true);
 		}
@@ -220,8 +221,25 @@ public class GameBoard extends JFrame {
 
 		if(nerd.getWeapons().size() == 0)
 		{
+			char grade = 'E';
+			if(score <= 1000) {
+				grade = 'F';
+			} else if (1000 < score && score <= 2000) {
+				grade = 'D';
+			} else if (2000 < score && score <= 3000) {
+				grade = 'C';
+			} else if (3000 < score && score <= 3500) {
+				grade = 'B';
+			} else if (score > 3500) {
+				grade = 'A';
+			}
 			String title = "Game Over";
-			String message = "Congratulations, you scored " + score + " points!";
+			String message = "";
+			if(grade == 'F' || grade == 'D' || grade == 'C') {
+				message = "You received a " + grade + "!\n" + score + " points!"; 
+			} else {
+				message = "Congratulations, you received a " + grade + "!\n" + score + " points!";
+			}
 			JOptionPane.showMessageDialog(this, message, title, JOptionPane.INFORMATION_MESSAGE);
 			System.exit(0);
 		}
@@ -354,11 +372,11 @@ public class GameBoard extends JFrame {
 
 					if (type.equalsIgnoreCase("Window"))
 					{
-						tempTarget = new Window(x, y, health, points, level, WINDOW_IMAGE);
+						tempTarget = new Window(x, y, health, points, level, WINDOW_IMAGE, "Window");
 					}
 					else if (type.equalsIgnoreCase("Exam"))
 					{
-						tempTarget = new Exam(x, y, health, points, level, EXAM_IMAGE, "Math");
+						tempTarget = new Exam(x, y, health, points, level, EXAM_IMAGE, "Math", "Exam");
 					}
 					else if (type.equalsIgnoreCase("Bully"))
 					{
@@ -488,11 +506,10 @@ public class GameBoard extends JFrame {
 				while(incorrect) {
 					try {
 						if (Integer.parseInt(angleField.getText()) == controlPanel.getAngleDifference()) {
-							JOptionPane.showMessageDialog(panel, "Correct!");
-							//must update the score!
+							JOptionPane.showMessageDialog(panel, "Correct!\n +20");
 							updateScore(20);
 						} else {
-							JOptionPane.showMessageDialog(panel, "Incorrect!");
+							JOptionPane.showMessageDialog(panel, "Incorrect!\n -10");
 							updateScore(-10);
 						}
 						incorrect = false;

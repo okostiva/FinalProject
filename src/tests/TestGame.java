@@ -35,9 +35,9 @@ public class TestGame {
 		book = new Book(50, 1, WEAPON_TYPE.BOOK, "images/book.png", "MATH");
 		pencil = new Pencil(20, 1, WEAPON_TYPE.PENCIL, "images/pencil.png");
 		prot = new Protractor(30, 1, WEAPON_TYPE.PROTRACTOR, "images/protractor.png");
-		window = new Window(20, 20, 45, 100, 1, "images/window.png");
+		window = new Window(20, 20, 45, 100, 1, "images/window.png", "Window");
 		bully = new Bully(40, 30, 66, 150, 1, "images/bully.png", "BULLY");
-		exam = new Exam(50, 30, 88, 200, 1, "images/exam.png", "PHYSICS");
+		exam = new Exam(50, 30, 88, 200, 1, "images/exam.png", "PHYSICS", "Exam");
 	}
 	
 	@Test
@@ -72,9 +72,9 @@ public class TestGame {
 		nerd.toss(5, 10);
 		Assert.assertEquals(0, nerd.getWeapons().size());
 		
-		window = new Window(20, 20, 45, 100, 1, "");
+		window = new Window(20, 20, 45, 100, 1, "", "Window");
 		bully = new Bully(40, 30, 66, 150, 2, "", "BULLY");
-		exam = new Exam(50, 30, 88, 200, 4, "", "PHYSICS");
+		exam = new Exam(50, 30, 88, 200, 4, "", "PHYSICS", "Exam");
 		
 		window.damageDone(book.getDamage());
 		Assert.assertTrue(window.getHealth() <= 0);
@@ -104,52 +104,33 @@ public class TestGame {
 		
 		controlPanel.setAngle(45);
 		controlPanel.setPower(10);
-		double expectedX = Math.cos(Math.toRadians(45.0))*10.0;
-		double expectedY = Math.sin(Math.toRadians(45.0))*10.0;
-		Assert.assertEquals(expectedX, controlPanel.getVelocityX());
-		Assert.assertEquals(expectedY, controlPanel.getVelocityY());
+		Assert.assertEquals(7.07, controlPanel.getVelocityX());
+		Assert.assertEquals(7.07, controlPanel.getVelocityY());
 		
 		controlPanel.setAngle(30);
 		controlPanel.setPower(10);
-		expectedX = Math.cos(Math.toRadians(30.0))*10.0;
-		expectedY = Math.sin(Math.toRadians(30.0))*10.0;
-		Assert.assertEquals(expectedX, controlPanel.getVelocityX());
-		Assert.assertEquals(expectedY, controlPanel.getVelocityY());	
+		Assert.assertEquals(8.66, controlPanel.getVelocityX());
+		Assert.assertEquals(5.00, controlPanel.getVelocityY());	
 		
 		controlPanel.setAngle(0);
 		controlPanel.setPower(10);
-		expectedX = Math.cos(Math.toRadians(0.0))*10.0;
-		expectedY = Math.sin(Math.toRadians(0.0))*10.0;
-		Assert.assertEquals(expectedX, controlPanel.getVelocityX());
-		Assert.assertEquals(expectedY, controlPanel.getVelocityY());
+		Assert.assertEquals(10.00, controlPanel.getVelocityX());
+		Assert.assertEquals(0.00, controlPanel.getVelocityY());
 		
 		controlPanel.setAngle(90);
 		controlPanel.setPower(10);
-		expectedX = Math.cos(Math.toRadians(90.0))*10.0;
-		expectedY = Math.sin(Math.toRadians(90.0))*10.0;
-		Assert.assertEquals(expectedX, controlPanel.getVelocityX());
-		Assert.assertEquals(expectedY, controlPanel.getVelocityY());
+		Assert.assertEquals(0.00, controlPanel.getVelocityX());
+		Assert.assertEquals(10.00, controlPanel.getVelocityY());
 		
 		controlPanel.setAngle(30);
-		controlPanel.setPower(100);
-		expectedX = Math.cos(Math.toRadians(30.0))*100.0;
-		expectedY = Math.sin(Math.toRadians(30.0))*100.0;
-		Assert.assertEquals(expectedX, controlPanel.getVelocityX());
-		Assert.assertEquals(expectedY, controlPanel.getVelocityY());
+		controlPanel.setPower(8);
+		Assert.assertEquals(6.93, controlPanel.getVelocityX());
+		Assert.assertEquals(4.00, controlPanel.getVelocityY());
 		
 		controlPanel.setAngle(30);
-		controlPanel.setPower(10);
-		expectedX = Math.cos(Math.toRadians(30.0))*10.0;
-		expectedY = Math.sin(Math.toRadians(30.0))*10.0;
-		Assert.assertEquals(expectedX, controlPanel.getVelocityX());
-		Assert.assertEquals(expectedY, controlPanel.getVelocityY());
-		
-		controlPanel.setAngle(30);
-		controlPanel.setPower(70);
-		expectedX = Math.cos(Math.toRadians(30.0))*70.0;
-		expectedY = Math.sin(Math.toRadians(30.0))*70.0;
-		Assert.assertEquals(expectedX, controlPanel.getVelocityX());
-		Assert.assertEquals(expectedY, controlPanel.getVelocityY());
+		controlPanel.setPower(2);
+		Assert.assertEquals(1.73, controlPanel.getVelocityX());
+		Assert.assertEquals(1.00, controlPanel.getVelocityY());
 	}
 	
 	//This test is for the angular difference (EASY)

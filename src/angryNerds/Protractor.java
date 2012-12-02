@@ -36,7 +36,7 @@ public class Protractor extends Weapon {
 
 	@Override
 	public String getWeaponName() {
-		return "protractor";
+		return "Protractor";
 	}
 
 }

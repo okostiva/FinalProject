@@ -44,7 +44,7 @@ public class Book extends Weapon {
 
 	@Override
 	public String getWeaponName() {
-		return "book";
+		return "Book";
 	}
 
 }

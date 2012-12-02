@@ -38,6 +38,6 @@ public class Pencil extends Weapon {
 
 	@Override
 	public String getWeaponName() {
-		return "pencil";
+		return "Pencil";
 	}
 }
