@@ -31,7 +31,7 @@ public class ControlPanel extends JPanel {
 		// TODO Auto-generated constructor stub
 		angleLabel = new JLabel("Angle in Degrees (1-89): ");
 		angleInput = new JTextArea("0");
-		powerLabel = new JLabel("Power (1-10): ");
+		powerLabel = new JLabel("Velocity (1-10): ");
 		powerInput = new JTextArea("0");
 		enterData = new JButton("Fire");
 		angle = 0;

@@ -506,10 +506,10 @@ public class GameBoard extends JFrame {
 				while(incorrect) {
 					try {
 						if (Integer.parseInt(angleField.getText()) == controlPanel.getAngleDifference()) {
-							JOptionPane.showMessageDialog(panel, "Correct!\n +20");
+							JOptionPane.showMessageDialog(panel, "Correct!\n+20");
 							updateScore(20);
 						} else {
-							JOptionPane.showMessageDialog(panel, "Incorrect!\n -10");
+							JOptionPane.showMessageDialog(panel, "Incorrect!\n-10");
 							updateScore(-10);
 						}
 						incorrect = false;
@@ -532,10 +532,10 @@ public class GameBoard extends JFrame {
 				while(incorrect) {
 					try {
 						if ((Double.parseDouble(xField.getText()) == controlPanel.getVelocityX()) && (Double.parseDouble(yField.getText()) == controlPanel.getVelocityY())) {
-							JOptionPane.showMessageDialog(panel, "Correct!");
+							JOptionPane.showMessageDialog(panel, "Correct!\n+20");
 							updateScore(20);
 						} else {
-							JOptionPane.showMessageDialog(panel, "Incorrect!");
+							JOptionPane.showMessageDialog(panel, "Incorrect!\n-10");
 							updateScore(-10);
 							System.out.println(controlPanel.getVelocityX() + " " + controlPanel.getVelocityY());
 						}
@@ -553,7 +553,7 @@ public class GameBoard extends JFrame {
 			panel = new JPanel();
 			angleLabel = new JLabel("What is the difference between 90 degrees and the angle you entered?");
 			angleField = new JTextField(3);
-			done = new JButton("DONE");
+			done = new JButton("Submit");
 
 			panel.add(angleLabel);
 			panel.add(angleField);
@@ -566,18 +566,19 @@ public class GameBoard extends JFrame {
 		
 		private JPanel addHardPanel() {
 			panel = new JPanel();
-			xLabel = new JLabel("Enter velocity in the x-direction: ");
-			yLabel = new JLabel("Enter velocity in the y-direction: ");
+			xLabel = new JLabel("Enter the velocity in the x-direction: ");
+			yLabel = new JLabel("Enter the velocity in the y-direction: ");
 			xField = new JTextField(3);
 			yField = new JTextField(3);
-			done = new JButton("DONE");
+			done = new JButton("Submit");
 			
 			panel.setLayout(new GridLayout(2,3));
 			panel.add(xLabel);
 			panel.add(yLabel);
-			panel.add(done);
+			panel.add(new JLabel());
 			panel.add(xField);
 			panel.add(yField);
+			panel.add(done);
 			
 			done.addActionListener(new HardDoneListener());
 			
