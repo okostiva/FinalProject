@@ -57,7 +57,7 @@ public abstract class Weapon extends JPanel {
 			dx = (int)Math.ceil(Math.cos(Math.toRadians(angle))*dx);
 			dy = (int)Math.ceil(Math.sin(Math.toRadians(angle))*dy - ((11/power)*x*0.0098));
 			
-			if ((this.y < 0) || (this.y > GameBoard.BOARD_HEIGHT) ||  (this.x > GameBoard.BOARD_WIDTH) || (this.x < 0))
+			if ((this.y > GameBoard.BOARD_HEIGHT) ||  (this.x > GameBoard.BOARD_WIDTH) || (this.x < 0))
 			{
 				return true;
 			}

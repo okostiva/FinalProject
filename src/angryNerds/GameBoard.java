@@ -536,7 +536,7 @@ public class GameBoard extends JFrame {
 			panel = new JPanel();
 			angleLabel = new JLabel("What is the difference between 90 degrees and the angle you entered?");
 			angleField = new JTextField(3);
-			done = new JButton("DONE");
+			done = new JButton("Submit");
 
 			panel.add(angleLabel);
 			panel.add(angleField);
@@ -549,18 +549,19 @@ public class GameBoard extends JFrame {
 		
 		private JPanel addHardPanel() {
 			panel = new JPanel();
-			xLabel = new JLabel("Enter velocity in the x-direction: ");
-			yLabel = new JLabel("Enter velocity in the y-direction: ");
+			xLabel = new JLabel("Enter the velocity in the x-direction: ");
+			yLabel = new JLabel("Enter the velocity in the y-direction: ");
 			xField = new JTextField(3);
 			yField = new JTextField(3);
-			done = new JButton("DONE");
+			done = new JButton("Submit");
 			
 			panel.setLayout(new GridLayout(2,3));
 			panel.add(xLabel);
 			panel.add(yLabel);
-			panel.add(done);
+			panel.add(new JLabel());
 			panel.add(xField);
 			panel.add(yField);
+			panel.add(done);
 			
 			done.addActionListener(new HardDoneListener());
 			
