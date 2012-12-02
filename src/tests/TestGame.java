@@ -32,12 +32,12 @@ public class TestGame {
 	@BeforeClass
 	public static void beforeTest () {
 		nerd = new Nerd("NERD", "");
-		book = new Book(50, 1, WEAPON_TYPE.BOOK, "images/book.png", "MATH");
-		pencil = new Pencil(20, 1, WEAPON_TYPE.PENCIL, "images/pencil.png");
-		prot = new Protractor(30, 1, WEAPON_TYPE.PROTRACTOR, "images/protractor.png");
-		window = new Window(20, 20, 45, 100, 1, "images/window.png");
-		bully = new Bully(40, 30, 66, 150, 1, "images/bully.png", "BULLY");
-		exam = new Exam(50, 30, 88, 200, 1, "images/exam.png", "PHYSICS");
+		book = new Book(50, 1, WEAPON_TYPE.BOOK, GameBoard.BOOK_IMAGE, "MATH");
+		pencil = new Pencil(20, 1, WEAPON_TYPE.PENCIL, GameBoard.PENCIL_IMAGE);
+		prot = new Protractor(30, 1, WEAPON_TYPE.PROTRACTOR, GameBoard.PROTRACTOR_IMAGE);
+		window = new Window(20, 20, 45, 100, 1, GameBoard.WINDOW_IMAGE);
+		bully = new Bully(40, 30, 66, 150, 1, GameBoard.BULLY_IMAGE, "BULLY");
+		exam = new Exam(50, 30, 88, 200, 1, GameBoard.EXAM_IMAGE, "PHYSICS");
 	}
 	
 	@Test
@@ -191,20 +191,20 @@ public class TestGame {
 		
 		Assert.assertEquals(25, targets.size());
 		
-		Assert.assertEquals(25, targets.get(0).getX());
-		Assert.assertEquals(25, targets.get(0).getY());
+		Assert.assertEquals(100, targets.get(0).getX());
+		Assert.assertEquals(100, targets.get(0).getY());
 		Assert.assertEquals(1, targets.get(0).getLevel());
 		Assert.assertEquals(50, targets.get(0).getHealth());
 		Assert.assertEquals(50, targets.get(0).getPoints());
 		
-		Assert.assertEquals(30, targets.get(4).getX());
-		Assert.assertEquals(100, targets.get(4).getY());
+		Assert.assertEquals(120, targets.get(4).getX());
+		Assert.assertEquals(200, targets.get(4).getY());
 		Assert.assertEquals(3, targets.get(4).getLevel());
 		Assert.assertEquals(100, targets.get(4).getHealth());
 		Assert.assertEquals(100, targets.get(4).getPoints());
 		
-		Assert.assertEquals(50, targets.get(24).getX());
-		Assert.assertEquals(90, targets.get(24).getY());
+		Assert.assertEquals(200, targets.get(24).getX());
+		Assert.assertEquals(100, targets.get(24).getY());
 		Assert.assertEquals(10, targets.get(24).getLevel());
 		Assert.assertEquals(75, targets.get(24).getHealth());
 		Assert.assertEquals(75, targets.get(24).getPoints());
