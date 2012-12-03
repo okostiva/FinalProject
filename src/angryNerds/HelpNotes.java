@@ -2,35 +2,32 @@ package angryNerds;
 
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.Graphics;
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.util.ArrayList;
-
-import javax.swing.BoxLayout;
-import javax.swing.Icon;
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
 public class HelpNotes extends JDialog {
-	Graphics g;
 	private JLabel weapons, targets;
 	String weaponsStr = "";
 	String targetsStr = "";
-	private JTextArea instructions, instructions2, listOfWeapons, listOfTargets;
+	private JTextArea instructions, listOfWeapons, listOfTargets;
 	ArrayList<Weapon> nerdWeapons;
 	ArrayList<Target> allTargets;
+	
+	//All images to display on the JDialog
 	Image pencilPicture = Toolkit.getDefaultToolkit().getImage("images/pencil.png");
 	Image bookPicture = Toolkit.getDefaultToolkit().getImage("images/book.png");
 	Image protPicture = Toolkit.getDefaultToolkit().getImage("images/protractor.png");
 	Image windowPicture = Toolkit.getDefaultToolkit().getImage("images/window.png");
 	Image bullyPicture = Toolkit.getDefaultToolkit().getImage("images/bully.png");
 	Image examPicture = Toolkit.getDefaultToolkit().getImage("images/exam.png");
+	
+	//Convert images to icons so that they appear on the JDialog
 	ImageIcon pencilIcon = new ImageIcon(pencilPicture);
 	ImageIcon bookIcon = new ImageIcon(bookPicture);
 	ImageIcon protIcon = new ImageIcon(protPicture);
@@ -46,12 +43,16 @@ public class HelpNotes extends JDialog {
 
 		nerdWeapons = nerd.getWeapons();
 		allTargets = t;
-		instructions = new JTextArea("You are an ANGRY NERD! \nDestroy all windows, bullies, and exams in each level to win the game! \nEach time you hit a target, its health will decrease. After you fire a weapon a quiz\nwill pop up. Answer the question correctly for a higher score! Do not worry about units.");
+		instructions = new JTextArea("You are an ANGRY NERD! \nDestroy all windows, bullies, and " +
+				"exams in each level to win the game! \nEach time you hit a target, its health will decrease. " +
+				"After you fire a weapon a quiz\nwill pop up. Answer the question correctly for a higher score! " +
+				"Do not worry about units.");
 		instructions.setFont(font2);
 		instructions.setForeground(Color.WHITE);
 		instructions.setBackground(Color.BLACK);
 		instructions.setEditable(false);
 		
+		//Print out one of each type of weapon and target along with its health/damage
 		ArrayList<String> oneOfEachWeapon = new ArrayList<String>();
 		ArrayList<String> oneOfEachTarget = new ArrayList<String>();
 		for(Weapon w : nerdWeapons) {
@@ -66,6 +67,7 @@ public class HelpNotes extends JDialog {
 				oneOfEachTarget.add(target.getName());
 			}
 		}
+		
 		listOfWeapons = new JTextArea(weaponsStr);
 		listOfWeapons.setFont(font);
 		listOfWeapons.setForeground(Color.WHITE);
@@ -76,6 +78,7 @@ public class HelpNotes extends JDialog {
 		listOfTargets.setForeground(Color.WHITE);
 		listOfTargets.setBackground(Color.BLACK);
 		
+		//Put the images on the JDialog for weapons
 		JLabel weaponImages = new JLabel();
 		weaponImages.setLayout(new GridLayout(1, 3));
 		JLabel pencilImage = new JLabel(pencilIcon);
@@ -87,6 +90,7 @@ public class HelpNotes extends JDialog {
 		weaponImages.setOpaque(true);
 		weaponImages.setBackground(Color.BLACK);
 		
+		//Put the images on the JDialog for targets
 		JLabel targetImages = new JLabel();
 		targetImages.setLayout(new GridLayout(1, 3));
 		JLabel windowImage = new JLabel(windowIcon);
