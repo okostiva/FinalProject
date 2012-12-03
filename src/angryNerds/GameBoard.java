@@ -36,10 +36,6 @@ public class GameBoard extends JFrame {
 	public static final String BULLY_IMAGE = "images/bully.png";
 	public static final String WINDOW_IMAGE = "images/window.png";
 	public static final String EXAM_IMAGE = "images/exam.png";
-	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -4580170113745359348L;
 	private Nerd nerd;
 	private int dx, dy;
@@ -57,7 +53,6 @@ public class GameBoard extends JFrame {
 	private JLabel levelLabel = new JLabel("Level: " + level);
 
 	public GameBoard() {
-		// TODO Auto-generated constructor stub
 		nerd = new Nerd();
 		controlPanel = new ControlPanel(this);
 		targets = new ArrayList<Target>();
@@ -74,7 +69,6 @@ public class GameBoard extends JFrame {
 		this.add(controlPanel);
 		setTitle("Angry Nerds >:-|");
 
-		//this.add(controlPanel, BorderLayout.PAGE_END);
 		JMenuBar menu = new JMenuBar();
 		GridLayout layout = new GridLayout(1,8);
 		menu.setLayout(layout);
@@ -131,6 +125,7 @@ public class GameBoard extends JFrame {
 		}		
 	}
 
+	//Shows the HelpNotes if not already showing
 	private class NotesItemListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) 
 		{
@@ -153,6 +148,7 @@ public class GameBoard extends JFrame {
 		return nerd;
 	}
 
+	//Draws all targets in the correct location for level 1
 	public void startGame() {	
 		for (Target t : targets)
 		{
@@ -173,6 +169,7 @@ public class GameBoard extends JFrame {
 		timer.start();
 	}
 
+	//Moves weapon along projectile path
 	public void updateDrawing(int dx, int dy) {
 		this.dx = dx;
 		this.dy = dy;
@@ -219,6 +216,7 @@ public class GameBoard extends JFrame {
 			nerd.removeWeapon(currentWeapon);
 		}
 
+		//Assigns a grade to the final score
 		if(nerd.getWeapons().size() == 0)
 		{
 			char grade = 'E';
@@ -479,6 +477,7 @@ public class GameBoard extends JFrame {
 		}
 	}
 	
+	//Class to bring up a "quiz box" each time after a weapon is fired
 	class MathDialog extends JDialog {
 
 		private JPanel panel = null;
@@ -498,6 +497,7 @@ public class GameBoard extends JFrame {
 			this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 		}
 		
+		//Checks the entered answers and determines what points to give
 		class EasyDoneListener implements ActionListener {
 			public void actionPerformed(ActionEvent e) 
 			{
@@ -524,6 +524,7 @@ public class GameBoard extends JFrame {
 			}
 		}
 		
+		//Checks the entered answers and determines what points to give
 		class HardDoneListener implements ActionListener {
 			public void actionPerformed(ActionEvent e) 
 			{
@@ -601,10 +602,12 @@ public class GameBoard extends JFrame {
 			}
 		}
 	}
+	
+	//The following should only be used for testing purposes and should not be called anywhere during game play
+		public void setNerd(Nerd nerd) {
+			this.nerd = nerd;
+		}
 
-	/**
-	 * @param args
-	 */
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		String title = "Welcome to Angry Nerds!";
@@ -613,14 +616,6 @@ public class GameBoard extends JFrame {
 		gameboard.setVisible(true);
 		gameboard.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		gameboard.startGame();
-
-		JOptionPane.showMessageDialog(gameboard, message, title, JOptionPane.INFORMATION_MESSAGE);
-		
-	}
-
-
-	//The following should only be used for testing purposes and should not be called anywhere during game play
-	public void setNerd(Nerd nerd) {
-		this.nerd = nerd;
+		JOptionPane.showMessageDialog(gameboard, message, title, JOptionPane.INFORMATION_MESSAGE);	
 	}
 }

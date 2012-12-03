@@ -3,22 +3,16 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.DecimalFormat;
-
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
-
 public class ControlPanel extends JPanel {
 
 	public enum Difficulty { EASY, HARD };
 	public static final int MAX_ANGLE = 90;
-	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 7717786247225180620L;
 	private int angle, power;
 	private JTextArea angleInput, powerInput;
@@ -28,7 +22,6 @@ public class ControlPanel extends JPanel {
 	private GameBoard gameboard;
 	
 	public ControlPanel(GameBoard gameboard) {
-		// TODO Auto-generated constructor stub
 		angleLabel = new JLabel("Angle in Degrees (1-89): ");
 		angleInput = new JTextArea("0");
 		powerLabel = new JLabel("Velocity (1-10): ");
@@ -60,16 +53,19 @@ public class ControlPanel extends JPanel {
 		return difficulty;
 	}
 	
+	//Returns the velocity of the weapon in the x-direction (used in hard setting quizzes)
 	public double getVelocityX() {
 		DecimalFormat df = new DecimalFormat("#.00");
 		return Double.valueOf(df.format(Math.cos(Math.toRadians(this.angle))*this.power));
 	}
 	
+	//Returns the velocity of the weapon in the y-direction (used in hard setting quizzes)
 	public double getVelocityY() {
 		DecimalFormat df = new DecimalFormat("#.00");
 		return Double.valueOf(df.format(Math.sin(Math.toRadians(this.angle))*this.power));
 	}
 	
+	//Used for the easy setting quizzes
 	public double getAngleDifference() {
 		return (90 - this.angle);
 	}
